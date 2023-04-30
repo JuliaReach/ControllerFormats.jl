@@ -21,7 +21,7 @@ Currently the package supports neural-network controllers.
 
 ## Installing
 
-This package requires Julia v1.0 or later.
+This package requires Julia v1.6 or later.
 We refer to the [official documentation](https://julialang.org/downloads) on how
 to install and run Julia on your system.
 

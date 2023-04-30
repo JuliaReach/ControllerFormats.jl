@@ -1,2 +1,5 @@
 [deps]
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+MAT = "23992714-dd62-5051-b70f-ba57cb901cac"
+ONNX = "d0dd6a25-fac6-55c0-abf7-829e0c774d20"
+YAML = "ddb6d928-2868-570f-bddf-ab3f9cf99eb6"
