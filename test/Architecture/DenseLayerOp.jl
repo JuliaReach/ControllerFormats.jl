@@ -1,5 +1,11 @@
 using ReachabilityBase.Subtypes: subtypes
 
+# AbstractLayerOp implementation
+struct TestLayerOp <: AbstractLayerOp end
+L = TestLayerOp()
+dim_in(L)
+dim_out(L)
+
 # 2D input vector and 2x3 layer
 x = [1.0, 1]
 W = hcat([1 0.5; -0.5 0.5; -1 -0.5])
@@ -22,6 +28,7 @@ L = DenseLayerOp(W, b, Id())
 @test dim_in(L) == 2
 @test dim_out(L) == 3
 @test dim(L) == (2, 3)
+@test length(L) == 3
 
 # test methods for all activations
 function test_layer(L::DenseLayerOp{Id})

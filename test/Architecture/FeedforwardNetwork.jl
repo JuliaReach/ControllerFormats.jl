@@ -1,3 +1,9 @@
+# AbstractNeuralNetwork implementation
+struct TestNeuralNetwork <: AbstractNeuralNetwork end
+N = TestNeuralNetwork()
+dim_in(N)
+dim_out(N)
+
 # 2D input vector
 x = [1.0, 1]
 
