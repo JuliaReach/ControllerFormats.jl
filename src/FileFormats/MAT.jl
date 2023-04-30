@@ -10,6 +10,7 @@ format. This function requires to load the
 
 - `filename` -- name of the `MAT` file
 - `act_key`  -- key used for the activation functions
+- `net_key`  -- (optional; default: `nothing`) key used for the neural network
 
 ### Output
 
@@ -17,19 +18,27 @@ A [`FeedforwardNetwork`](@ref).
 
 ### Notes
 
-The `MATLAB` file encodes a dictionary, which is assumed to contain the
-following:
+The `MATLAB` file encodes a dictionary.
+If `net_key` is given, then the dictionary contains another dictionary under
+this key.
+Otherwise the outer dictionary directly contains the following:
 
 - A vector of weight matrices (under the name `"W"`)
 - A vector of bias vectors (under the name `"b"`)
 - A vector of strings for the activation functions (under the name passed via
   `act_key`)
 """
-function read_MAT(filename::String; act_key::String)
+function read_MAT(filename::String; act_key::String,
+                  net_key::Union{String, Nothing}=nothing)
     require(@__MODULE__, :MAT; fun_name="read_MAT")
 
     # read data as a Dict
     data = matread(filename)
+
+    # unwrap potential inner dictionary
+    if !isnothing(net_key)
+        data = data[net_key]
+    end
 
     # read data
     !haskey(data, "W") && throw(ArgumentError("could not find key `'W'`"))
@@ -44,25 +53,15 @@ function read_MAT(filename::String; act_key::String)
 
     for i in 1:n_layer_ops
         # weights
-        W = weights_vec[i]
-        s = size(W)
-        if length(s) == 4
-            # weights sometimes are stored as a multi-dimensional array
-            # with two flat dimensions
-            if s[3] == 1 && s[4] == 1
-                W = reshape(W, s[1], s[2])
-            else
-                throw(ArgumentError("unexpected dimension of the weights matrix: $s"))
-            end
-        end
+        W = _mat(weights_vec[i])
 
         # bias
-        b = bias_vec[i]
+        b = _vec(bias_vec[i])
 
         # activation function
         act = available_activations[act_vec[i]]
 
-        layers[i] = DenseLayerOp(W, _vec(b), act)
+        layers[i] = DenseLayerOp(W, b, act)
     end
 
     return FeedforwardNetwork(layers)
@@ -70,6 +69,19 @@ end
 
 # convert to a Vector
 _vec(A::Vector) = A
-_vec(A::AbstractVector) = Vector(A)
 _vec(A::AbstractMatrix) = vec(A)
 _vec(A::Number) = [A]
+
+# convert to a Matrix
+_mat(A::Matrix) = A
+_mat(A::Number) = hcat(A)
+function _mat(A::Array{<:Number, 4})
+    # weights are sometimes stored as a multi-dimensional array with two flat
+    # dimensions
+    s = size(A)
+    if s[3] == 1 && s[4] == 1
+        return reshape(A, s[1], s[2])
+    else
+        throw(ArgumentError("unexpected dimension of the weights matrix: $s"))
+    end
+end
