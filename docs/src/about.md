@@ -3,10 +3,6 @@
 This page contains some general information about this project and
 recommendations about contributing.
 
-```@contents
-Pages = ["about.md"]
-```
-
 ## Contributing
 
 If you like this package, consider contributing!
@@ -91,5 +87,9 @@ library, as well as past and present contributors (in alphabetic order).
 
 ### Core developers
 
-- [Marcelo Forets](http://github.com/mforets)
-- [Christian Schilling](https://www.christianschilling.net/)
+- [Marcelo Forets](http://github.com/mforets), Universidad de la República
+- [Christian Schilling](https://www.christianschilling.net/), Aalborg University
+
+### Contributors
+
+- [Sebastián Guadalupe](https://github.com/SebastianGuadalupe), Universidad de la República

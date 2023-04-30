@@ -11,6 +11,11 @@ makedocs(
         assets = ["assets/aligned.css"]),
     pages = [
         "Home" => "index.md",
+        "Library" => [
+            "ControllerFormats module" => "lib/ControllerFormats.md",
+            "Architecture module" => "lib/Architecture.md",
+            "FileFormats module" => "lib/FileFormats.md"
+        ],
         "About" => "about.md"
     ],
     strict = true
