@@ -5,7 +5,6 @@ Abstract type for activation functions.
 """
 abstract type ActivationFunction end
 
-
 """
     Id
 
@@ -18,7 +17,6 @@ Identity activation.
 struct Id <: ActivationFunction end
 
 (::Id)(x) = x
-
 
 """
     ReLU
@@ -33,7 +31,6 @@ struct ReLU <: ActivationFunction end
 
 (::ReLU)(x) = max.(x, zero(eltype(x)))
 
-
 """
     Sigmoid
 
@@ -46,7 +43,6 @@ Sigmoid activation.
 struct Sigmoid <: ActivationFunction end
 
 (::Sigmoid)(x) = @. 1 / (1 + exp(-x))
-
 
 """
     Tanh

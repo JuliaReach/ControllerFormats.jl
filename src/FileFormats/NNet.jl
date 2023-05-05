@@ -48,7 +48,7 @@ function read_NNet(filename::String)
         n_layer_ops = parse(Int, split(line, ",")[1])
 
         # layer sizes
-        layer_sizes = parse.(Int, split(readline(io), ",")[1:n_layer_ops+1])
+        layer_sizes = parse.(Int, split(readline(io), ",")[1:(n_layer_ops + 1)])
 
         # five lines of irrelevant information
         for i in 1:5
@@ -56,11 +56,11 @@ function read_NNet(filename::String)
         end
 
         # read layers except for the output layer (with ReLU activation)
-        T = DenseLayerOp{<:ActivationFunction, Matrix{Float64}, Vector{Float64}}
-        layers = T[_read_layer_NNet(dim, io, ReLU()) for dim in layer_sizes[2:end-1]]
+        T = DenseLayerOp{<:ActivationFunction,Matrix{Float64},Vector{Float64}}
+        layers = T[_read_layer_NNet(dim, io, ReLU()) for dim in layer_sizes[2:(end - 1)]]
 
         # read output layer (with identity activation)
-        push!(layers, _read_layer_NNet(last(layer_sizes), io, Id()))
+        return push!(layers, _read_layer_NNet(last(layer_sizes), io, Id()))
     end
 
     return FeedforwardNetwork(layers)
@@ -68,9 +68,9 @@ end
 
 # some complication because lines can optionally be terminated by a comma
 function _read_layer_NNet(output_dim::Int, f::IOStream, act)
-     # simple parsing as a Vector of Vectors
-     weights = [parse.(Float64, filter(!isempty, split(readline(f), ","))) for _ in 1:output_dim]
-     weights = vcat(weights'...)
-     bias = [parse(Float64, split(readline(f), ",")[1]) for _ in 1:output_dim]
-     return DenseLayerOp(weights, bias, act)
+    # simple parsing as a Vector of Vectors
+    weights = [parse.(Float64, filter(!isempty, split(readline(f), ","))) for _ in 1:output_dim]
+    weights = vcat(weights'...)
+    bias = [parse(Float64, split(readline(f), ",")[1]) for _ in 1:output_dim]
+    return DenseLayerOp(weights, bias, act)
 end

@@ -27,7 +27,7 @@ function read_YAML(filename::String)
     act_vec = data["activations"]
     n_layer_ops = length(bias_vec)  # number of layer operations
 
-    T = DenseLayerOp{<:ActivationFunction, Matrix{Float64}, Vector{Float64}}
+    T = DenseLayerOp{<:ActivationFunction,Matrix{Float64},Vector{Float64}}
     layers = Vector{T}(undef, n_layer_ops)
 
     for i in 1:n_layer_ops

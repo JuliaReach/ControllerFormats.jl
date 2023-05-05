@@ -38,7 +38,7 @@ function _first_inconsistent_layer(L)
     return 0
 end
 
-(N::FeedforwardNetwork)(x) = reduce((a1, a2) -> a2∘a1, N.layers)(x)
+(N::FeedforwardNetwork)(x) = reduce((a1, a2) -> a2 ∘ a1, N.layers)(x)
 
 function Base.:(==)(N1::FeedforwardNetwork, N2::FeedforwardNetwork)
     return N1.layers == N2.layers

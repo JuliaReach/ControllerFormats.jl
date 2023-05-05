@@ -21,7 +21,7 @@ function read_Sherlock(filename::String)
     # activation functions are not read from file because they are always ReLU
     read_activations(io, n_layer_ops) = i -> ReLU()
 
-    layer_type = DenseLayerOp{ReLU, Matrix{Float32}, Vector{Float32}}
+    layer_type = DenseLayerOp{ReLU,Matrix{Float32},Vector{Float32}}
 
     return _read_Sherlock_POLAR(filename, read_activations, layer_type)
 end
@@ -62,7 +62,7 @@ function _read_Sherlock_POLAR(filename::String, read_activations, layer_type)
         # - bias term of the last neuron in layer 1
         # continue with layer 2 until the output layer
         @inbounds for i in 1:n_layer_ops
-            W, b = _read_layer_Sherlock(io, n_neurons[i+1], n_neurons[i])
+            W, b = _read_layer_Sherlock(io, n_neurons[i + 1], n_neurons[i])
             layers[i] = DenseLayerOp(W, b, activations(i))
         end
     end
@@ -121,13 +121,13 @@ function write_Sherlock(N::FeedforwardNetwork, filename::String)
             _write_layer_Sherlock(io, layer)
         end
     end
-    nothing
+    return nothing
 end
 
 function _write_layer_Sherlock(io, layer)
     @assert layer.activation isa ReLU "the Sherlock format requires ReLU " *
-        "activations everywhere, but the network contains a " *
-        "`$(typeof(layer.activation))` activation"
+                                      "activations everywhere, but the network contains a " *
+                                      "`$(typeof(layer.activation))` activation"
 
     W = layer.weights
     b = layer.bias
