@@ -42,7 +42,7 @@ function read_ONNX(filename::String; input_dimension=nothing)
             dimensions = input[1].var"#type".value.value.shape.dim
             @assert dimensions isa Vector{ONNX.var"TensorShapeProto.Dimension"} &&
                     length(dimensions) == 2 && dimensions[1].value.value == 1
-            input_dimension = dimensions[2].value.value
+            return input_dimension = dimensions[2].value.value
         end
     end
 
@@ -53,7 +53,7 @@ function read_ONNX(filename::String; input_dimension=nothing)
     data = load(filename, x0)
 
     @assert data isa Umlaut.Tape{ONNX.ONNXCtx} "`read_ONNX` must be called " *
-        "with `ONNX.Umlaut.Tape{ONNX.ONNXCtx}`"
+                                               "with `ONNX.Umlaut.Tape{ONNX.ONNXCtx}`"
 
     layer_parameters = []
     ops = data.ops
@@ -74,7 +74,7 @@ function read_ONNX(filename::String; input_dimension=nothing)
     end
     n_layers = div(idx - 2, 2)
     @assert length(ops) == 4 * n_layers
-    T = DenseLayerOp{<:ActivationFunction, Matrix{Float32}, Vector{Float32}}
+    T = DenseLayerOp{<:ActivationFunction,Matrix{Float32},Vector{Float32}}
     layers = T[]
     layer = 1
     while idx <= length(ops)

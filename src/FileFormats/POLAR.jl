@@ -22,7 +22,7 @@ function read_POLAR(filename::String)
         return i -> activations[i]
     end
 
-    layer_type = DenseLayerOp{<:ActivationFunction, Matrix{Float32}, Vector{Float32}}
+    layer_type = DenseLayerOp{<:ActivationFunction,Matrix{Float32},Vector{Float32}}
 
     return _read_Sherlock_POLAR(filename, read_activations, layer_type)
 end

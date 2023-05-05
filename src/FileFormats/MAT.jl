@@ -29,7 +29,7 @@ Otherwise the outer dictionary directly contains the following:
   `act_key`)
 """
 function read_MAT(filename::String; act_key::String,
-                  net_key::Union{String, Nothing}=nothing)
+                  net_key::Union{String,Nothing}=nothing)
     require(@__MODULE__, :MAT; fun_name="read_MAT")
 
     # read data as a Dict
@@ -48,7 +48,7 @@ function read_MAT(filename::String; act_key::String,
     act_vec = data[act_key]
     n_layer_ops = length(bias_vec)  # number of layer operations
 
-    T = DenseLayerOp{<:ActivationFunction, Matrix{Float64}, Vector{Float64}}
+    T = DenseLayerOp{<:ActivationFunction,Matrix{Float64},Vector{Float64}}
     layers = Vector{T}(undef, n_layer_ops)
 
     for i in 1:n_layer_ops
@@ -75,7 +75,7 @@ _vec(A::Number) = [A]
 # convert to a Matrix
 _mat(A::Matrix) = A
 _mat(A::Number) = hcat(A)
-function _mat(A::Array{<:Number, 4})
+function _mat(A::Array{<:Number,4})
     # weights are sometimes stored as a multi-dimensional array with two flat
     # dimensions
     s = size(A)
