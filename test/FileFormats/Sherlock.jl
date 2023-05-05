@@ -8,7 +8,6 @@ N = read_Sherlock(file)
 @test dim_out(N.layers[1]) == 2
 @test dim_out(N) == 1
 
-
 # write network back to file and re-read it
 file = joinpath(@__DIR__, "sample_Sherlock_output")
 
