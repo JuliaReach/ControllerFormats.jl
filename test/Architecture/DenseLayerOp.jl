@@ -21,8 +21,8 @@ L = DenseLayerOp(W, b, Id())
 # equality
 @test L == DenseLayerOp(W, b, Id())
 @test L != DenseLayerOp(W .+ 1, b, Id()) &&
-    L != DenseLayerOp(W, b .+ 1, Id()) &&
-    L != DenseLayerOp(W, b, ReLU())
+      L != DenseLayerOp(W, b .+ 1, Id()) &&
+      L != DenseLayerOp(W, b, ReLU())
 
 # dimensions
 @test dim_in(L) == 2
@@ -40,15 +40,15 @@ function test_layer(L::DenseLayerOp{ReLU})
 end
 
 function test_layer(L::DenseLayerOp{Sigmoid})
-    @test L(x) ≈ [0.924, 0.5, 0.029]  atol=1e-3
+    @test L(x) ≈ [0.924, 0.5, 0.029] atol = 1e-3
 end
 
 function test_layer(L::DenseLayerOp{Tanh})
-    @test L(x) ≈ [0.986, 0, -0.998]  atol=1e-3
+    @test L(x) ≈ [0.986, 0, -0.998] atol = 1e-3
 end
 
 function test_layer(L::DenseLayerOp)
-    error("untested activation function: ", typeof(L.activation))
+    return error("untested activation function: ", typeof(L.activation))
 end
 
 # run test with all activations
