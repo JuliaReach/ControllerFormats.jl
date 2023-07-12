@@ -8,6 +8,10 @@ A dense layer operation is an affine map followed by an activation function.
 - `weights`    -- weight matrix
 - `bias`       -- bias vector
 - `activation` -- activation function
+
+### Notes
+
+Conversion from a `Flux.Dense` is supported.
 """
 struct DenseLayerOp{F,M<:AbstractMatrix,B} <: AbstractLayerOp
     weights::M
@@ -42,3 +46,15 @@ end
 dim_in(L::DenseLayerOp) = size(L.weights, 2)
 
 dim_out(L::DenseLayerOp) = length(L.bias)
+
+function load_Flux_convert_layer()
+    return quote
+        function Base.convert(::Type{DenseLayerOp}, layer::Flux.Dense)
+            act = get(activations_Flux, layer.σ, nothing)
+            if isnothing(act)
+                throw(ArgumentError("unknown activation function $(layer.σ)"))
+            end
+            return DenseLayerOp(layer.weight, layer.bias, act)
+        end
+    end
+end

@@ -56,3 +56,17 @@ Hyperbolic tangent activation.
 struct Tanh <: ActivationFunction end
 
 (::Tanh)(x) = tanh.(x)
+
+# constant instances of each activation function
+const _id = Id()
+const _relu = ReLU()
+const _sigmoid = Sigmoid()
+const _tanh = Tanh()
+
+function load_Flux_activations()
+    return quote
+        activations_Flux = Dict(Flux.identity => _id,
+                                Flux.relu => _relu,
+                                Flux.sigmoid => _sigmoid)
+    end
+end

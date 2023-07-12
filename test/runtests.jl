@@ -2,7 +2,7 @@ using Test, ControllerFormats
 
 using ControllerFormats: dim
 
-import MAT, ONNX, YAML
+import Flux, MAT, ONNX, YAML
 
 @testset "Architecture" begin
     @testset "DenseLayerOp" begin
@@ -10,6 +10,9 @@ import MAT, ONNX, YAML
     end
     @testset "FeedforwardNetwork" begin
         include("Architecture/FeedforwardNetwork.jl")
+    end
+    @testset "Flux bridge" begin
+        include("Architecture/Flux.jl")
     end
 end
 
