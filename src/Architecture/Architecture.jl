@@ -16,4 +16,6 @@ include("ActivationFunction.jl")
 include("DenseLayerOp.jl")
 include("FeedforwardNetwork.jl")
 
+include("init.jl")
+
 end  # module

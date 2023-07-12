@@ -47,3 +47,7 @@ end
 dim_in(N::FeedforwardNetwork) = dim_in(first(N.layers))
 
 dim_out(N::FeedforwardNetwork) = dim_out(last(N.layers))
+
+function load_Flux_convert_network()
+    ...
+end
