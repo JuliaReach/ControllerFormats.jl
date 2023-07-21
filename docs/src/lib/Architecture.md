@@ -22,6 +22,12 @@ An artificial neural network can be used as a controller.
 
 ```@docs
 AbstractNeuralNetwork
+layers(::AbstractNeuralNetwork)
+```
+
+The following non-standard methods are implemented:
+
+```@docs
 dim_in(::AbstractNeuralNetwork)
 dim_out(::AbstractNeuralNetwork)
 ControllerFormats.dim(::AbstractNeuralNetwork)
@@ -37,6 +43,11 @@ FeedforwardNetwork
 
 ```@docs
 AbstractLayerOp
+```
+
+The following non-standard methods are useful to implement:
+
+```@docs
 dim_in(::AbstractLayerOp)
 dim_out(::AbstractLayerOp)
 ControllerFormats.dim(::AbstractLayerOp)
