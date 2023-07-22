@@ -32,6 +32,11 @@ N2 = FeedforwardNetwork([L1, L2])
 @test N1 == FeedforwardNetwork([L1])
 @test N1 != FeedforwardNetwork([L2])
 
+# approximate equality
+@test N1 ≈ FeedforwardNetwork([L1])
+@test N1 ≈ FeedforwardNetwork([DenseLayerOp(W1 .+ 1e-10, b1, ReLU())])
+@test !(N1 ≈ FeedforwardNetwork([L2]))
+
 # dimensions
 @test dim_in(N1) == 2 && dim_in(N2) == 2
 @test dim_out(N1) == 3 && dim_out(N2) == 2
