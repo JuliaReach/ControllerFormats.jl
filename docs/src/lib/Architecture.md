@@ -30,7 +30,7 @@ The following non-standard methods are implemented:
 ```@docs
 dim_in(::AbstractNeuralNetwork)
 dim_out(::AbstractNeuralNetwork)
-ControllerFormats.dim(::AbstractNeuralNetwork)
+ControllerFormats.Architecture.dim(::AbstractNeuralNetwork)
 ```
 
 #### Implementation
@@ -50,7 +50,7 @@ The following non-standard methods are useful to implement:
 ```@docs
 dim_in(::AbstractLayerOp)
 dim_out(::AbstractLayerOp)
-ControllerFormats.dim(::AbstractLayerOp)
+ControllerFormats.Architecture.dim(::AbstractLayerOp)
 ```
 
 #### Implementation

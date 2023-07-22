@@ -76,6 +76,10 @@ Return the input and output dimension of a neural network.
 
 The pair ``(i, o)`` where ``i`` is the input dimension and ``o`` is the output
 dimension of `N`.
+
+### Notes
+
+This function is not exported due to name conflicts with other related packages.
 """
 dim(N::AbstractNeuralNetwork) = (dim_in(N), dim_out(N))
 
