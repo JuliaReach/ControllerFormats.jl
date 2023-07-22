@@ -57,6 +57,27 @@ struct Tanh <: ActivationFunction end
 
 (::Tanh)(x) = tanh.(x)
 
+"""
+    LeakyReLU{N<:Number}
+
+Leaky ReLU activation.
+
+```math
+    fₐ(x) = x > 0 ? x : a x
+```
+where ``a`` is the parameter.
+
+### Fields
+
+- `slope` -- parameter for negative inputs
+"""
+struct LeakyReLU{N<:Number} <: ActivationFunction
+    slope::N
+end
+
+(lr::LeakyReLU)(x::Number) = x >= zero(x) ? x : lr.slope * x
+(lr::LeakyReLU)(x::AbstractVector) = lr.(x)
+
 # constant instances of each activation function
 const _id = Id()
 const _relu = ReLU()

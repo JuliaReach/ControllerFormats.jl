@@ -10,7 +10,7 @@ using Requires
 export AbstractNeuralNetwork, AbstractLayerOp,
        FeedforwardNetwork, DenseLayerOp,
        dim_in, dim_out, dim,
-       ActivationFunction, Id, ReLU, Sigmoid, Tanh
+       ActivationFunction, Id, ReLU, Sigmoid, Tanh, LeakyReLU
 
 include("AbstractNeuralNetwork.jl")
 include("AbstractLayerOp.jl")
