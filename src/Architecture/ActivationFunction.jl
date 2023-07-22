@@ -66,7 +66,10 @@ const _tanh = Tanh()
 function load_Flux_activations()
     return quote
         activations_Flux = Dict(Flux.identity => _id,
+                                _id => Flux.identity,
                                 Flux.relu => _relu,
-                                Flux.sigmoid => _sigmoid)
+                                _relu => Flux.relu,
+                                Flux.sigmoid => _sigmoid,
+                                _sigmoid => Flux.sigmoid)
     end
 end

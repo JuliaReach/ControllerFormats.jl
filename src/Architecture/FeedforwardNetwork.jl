@@ -56,5 +56,10 @@ function load_Flux_convert_network()
             layers = [convert(DenseLayerOp, layer) for layer in chain.layers]
             return FeedforwardNetwork(layers)
         end
+
+        function Base.convert(::Type{Flux.Chain}, net::FeedforwardNetwork)
+            layers = [convert(Flux.Dense, layer) for layer in net.layers]
+            return Flux.Chain(layers)
+        end
     end
 end

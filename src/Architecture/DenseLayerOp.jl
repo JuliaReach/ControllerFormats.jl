@@ -52,9 +52,17 @@ function load_Flux_convert_layer()
         function Base.convert(::Type{DenseLayerOp}, layer::Flux.Dense)
             act = get(activations_Flux, layer.σ, nothing)
             if isnothing(act)
-                throw(ArgumentError("unknown activation function $(layer.σ)"))
+                throw(ArgumentError("unsupported activation function $(layer.σ)"))
             end
             return DenseLayerOp(layer.weight, layer.bias, act)
+        end
+
+        function Base.convert(::Type{Flux.Dense}, layer::DenseLayerOp)
+            act = get(activations_Flux, layer.activation, nothing)
+            if isnothing(act)
+                throw(ArgumentError("unsupported activation function $(layer.activation)"))
+            end
+            return Flux.Dense(layer.weights, layer.bias, act)
         end
     end
 end
