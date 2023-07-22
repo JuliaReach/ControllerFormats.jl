@@ -29,5 +29,6 @@ read_YAML
 
 ```@docs
 write_NNet
+write_POLAR
 write_Sherlock
 ```
