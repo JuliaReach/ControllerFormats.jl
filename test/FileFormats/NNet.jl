@@ -8,3 +8,12 @@ file = joinpath(@__DIR__, "sample_NNet.nnet")
 N = read_NNet(file)
 
 @test length(N.layers) == 3
+
+# write network back to file and re-read it
+file = joinpath(@__DIR__, "sample_NNet_output.nnet")
+
+write_NNet(N, file)
+N2 = read_NNet(file)
+rm(file)
+
+@test N == N2
