@@ -56,7 +56,7 @@ function read_NNet(filename::String)
         end
 
         # read layers except for the output layer (with ReLU activation)
-        T = DenseLayerOp{<:ActivationFunction,Matrix{Float64},Vector{Float64}}
+        T = DenseLayerOp{<:ActivationFunction,Matrix{Float32},Vector{Float32}}
         layers = T[_read_layer_NNet(io, dim, ReLU()) for dim in layer_sizes[2:(end - 1)]]
 
         # read output layer (with identity activation)
@@ -69,9 +69,9 @@ end
 # some complication because lines can optionally be terminated by a comma
 function _read_layer_NNet(io::IOStream, output_dim::Int, act)
     # simple parsing as a Vector of Vectors
-    weights = [parse.(Float64, filter(!isempty, split(readline(io), ","))) for _ in 1:output_dim]
+    weights = [parse.(Float32, filter(!isempty, split(readline(io), ","))) for _ in 1:output_dim]
     weights = vcat(weights'...)
-    bias = [parse(Float64, split(readline(io), ",")[1]) for _ in 1:output_dim]
+    bias = [parse(Float32, split(readline(io), ",")[1]) for _ in 1:output_dim]
     return DenseLayerOp(weights, bias, act)
 end
 
