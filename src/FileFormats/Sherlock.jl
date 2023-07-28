@@ -19,7 +19,7 @@ All layers including the output layer implicitly use a ReLU activation function.
 """
 function read_Sherlock(filename::String)
     # activation functions are not read from file because they are always ReLU
-    read_activations(io, n_layer_ops) = i -> ReLU()
+    read_activations(io, n_layer_ops) = i -> Architecture._relu
 
     layer_type = DenseLayerOp{ReLU,Matrix{Float32},Vector{Float32}}
 
