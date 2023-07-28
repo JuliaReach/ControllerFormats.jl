@@ -55,3 +55,12 @@ function load_Flux_convert_network()
         end
     end
 end
+
+function Base.show(io::IO, N::FeedforwardNetwork)
+    str = "$(string(FeedforwardNetwork)) with $(dim_in(N)) inputs, " *
+          "$(dim_out(N)) outputs, and $(length(N)) layers:"
+    for l in layers(N)
+        str *= "\n- $l"
+    end
+    return print(io, str)
+end
