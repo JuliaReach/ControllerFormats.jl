@@ -8,5 +8,5 @@ YAML = "ddb6d928-2868-570f-bddf-ab3f9cf99eb6"
 [compat]
 MAT = "0.10"
 ONNX = "0.2"
-ReachabilityBase = "0.1.1"
+ReachabilityBase = "0.1.1 - 0.2"
 YAML = "0.3 - 0.4"
