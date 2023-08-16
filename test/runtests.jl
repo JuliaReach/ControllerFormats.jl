@@ -4,6 +4,8 @@ using ControllerFormats.Architecture: dim
 
 import Flux, MAT, ONNX, YAML
 
+struct TestActivation <: ActivationFunction end
+
 @testset "Architecture" begin
     @testset "DenseLayerOp" begin
         include("Architecture/DenseLayerOp.jl")

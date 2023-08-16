@@ -37,6 +37,7 @@ println(io, N2)
 @test N1 ≈ FeedforwardNetwork([L1])
 @test N1 ≈ FeedforwardNetwork([DenseLayerOp(W1 .+ 1e-10, b1, ReLU())])
 @test !(N1 ≈ FeedforwardNetwork([L2]))
+@test !(N1 ≈ N2)
 
 # list/array interface
 @test length(N1) == 1 && length(N2) == 2
