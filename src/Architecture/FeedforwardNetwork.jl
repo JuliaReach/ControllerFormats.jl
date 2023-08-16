@@ -46,6 +46,14 @@ function Base.:(==)(N1::FeedforwardNetwork, N2::FeedforwardNetwork)
     return N1.layers == N2.layers
 end
 
+function Base.:isapprox(N1::FeedforwardNetwork, N2::FeedforwardNetwork;
+                        atol::Real=0, rtol=nothing)
+    if length(N1.layers) != length(N2.layers)
+        return false
+    end
+    return all(isapprox.(N1.layers, N2.layers; atol=atol, rtol=rtol))
+end
+
 dim_in(N::FeedforwardNetwork) = dim_in(first(N.layers))
 
 dim_out(N::FeedforwardNetwork) = dim_out(last(N.layers))

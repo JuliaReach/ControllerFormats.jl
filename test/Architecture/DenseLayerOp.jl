@@ -23,6 +23,20 @@ L = DenseLayerOp(W, b, Id())
 @test L != DenseLayerOp(W .+ 1, b, Id()) &&
       L != DenseLayerOp(W, b .+ 1, Id()) &&
       L != DenseLayerOp(W, b, ReLU())
+@test L != DenseLayerOp(hcat(1), [1], Id())
+
+# approximate equality
+@test L ≈ DenseLayerOp(W, b, Id())
+@test L ≈ DenseLayerOp(W .+ 1e-10, b, Id()) &&
+      L ≈ DenseLayerOp(W, b .+ 1e-10, Id()) &&
+      !≈(L, DenseLayerOp(W .+ 1e-10, b, Id()); rtol=1e-12) &&
+      !≈(L, DenseLayerOp(W, b .+ 1e-10, Id()); rtol=1e-12) &&
+      ≈(L, DenseLayerOp(W .+ 1e-1, b, Id()); atol=1) &&
+      ≈(L, DenseLayerOp(W, b .+ 1e-1, Id()); atol=1) &&
+      !(L ≈ DenseLayerOp(W .+ 1, b, Id())) &&
+      !(L ≈ DenseLayerOp(W, b .+ 1, Id())) &&
+      !(L ≈ DenseLayerOp(W, b, ReLU()))
+@test !(L ≈ DenseLayerOp(hcat(1), [1], Id()))
 
 # dimensions
 @test dim_in(L) == 2
