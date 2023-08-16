@@ -23,12 +23,14 @@ function read_Sherlock(filename::String)
 
     layer_type = DenseLayerOp{ReLU,Matrix{Float32},Vector{Float32}}
 
-    return _read_Sherlock_POLAR(filename, read_activations, layer_type)
+    read_end(io) = nothing
+
+    return _read_Sherlock_POLAR(filename, read_activations, layer_type, read_end)
 end
 
 # common code for Sherlock and POLAR format
 # (the only difference is that Sherlock always uses ReLU)
-function _read_Sherlock_POLAR(filename::String, read_activations, layer_type)
+function _read_Sherlock_POLAR(filename::String, read_activations, layer_type, read_end)
     layers = nothing
     open(filename, "r") do io
         n_inputs = parse(Int, readline(io))  # number of neurons in input layer
@@ -65,6 +67,8 @@ function _read_Sherlock_POLAR(filename::String, read_activations, layer_type)
             W, b = _read_layer_Sherlock(io, n_neurons[i + 1], n_neurons[i])
             layers[i] = DenseLayerOp(W, b, activations(i))
         end
+
+        read_end(io)
     end
 
     return FeedforwardNetwork(layers)
@@ -103,6 +107,12 @@ format.
 The Sherlock format requires that all activation functions are ReLU.
 """
 function write_Sherlock(N::FeedforwardNetwork, filename::String)
+    write_end(io) = nothing
+    return _write_Sherlock_POLAR(N, filename, _write_activation_Sherlock, write_end)
+end
+
+function _write_Sherlock_POLAR(N::FeedforwardNetwork, filename::String,
+                               write_activation, write_end)
     n_inputs = dim_in(N)
     n_outputs = dim_out(N)
     n_hidden_layers = length(N.layers) - 1
@@ -116,19 +126,30 @@ function write_Sherlock(N::FeedforwardNetwork, filename::String)
             println(io, string(dim_out(N.layers[i])))
         end
 
+        # one line for each activation of the hidden and output layers
+        @inbounds for layer in N.layers
+            write_activation(io, layer)
+        end
+
         # one line for each weight and bias of the hidden and output layers
         @inbounds for layer in N.layers
-            _write_layer_Sherlock(io, layer)
+            _write_layer_Sherlock_POLAR(io, layer)
         end
+
+        # write end pattern
+        write_end(io)
     end
     return nothing
 end
 
-function _write_layer_Sherlock(io, layer)
+function _write_activation_Sherlock(io, layer)
     @assert layer.activation isa ReLU "the Sherlock format requires ReLU " *
                                       "activations everywhere, but the network contains a " *
                                       "`$(typeof(layer.activation))` activation"
+    return nothing
+end
 
+function _write_layer_Sherlock_POLAR(io, layer)
     W = layer.weights
     b = layer.bias
     m, n = size(W)

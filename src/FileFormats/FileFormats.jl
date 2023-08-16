@@ -12,7 +12,7 @@ using ReachabilityBase.Require
 export read_MAT,
        read_NNet, write_NNet,
        read_ONNX,
-       read_POLAR,
+       read_POLAR, write_POLAR,
        read_Sherlock, write_Sherlock,
        read_YAML
 
