@@ -1,6 +1,6 @@
 using Test, ControllerFormats
 
-using ControllerFormats: dim
+using ControllerFormats.Architecture: dim
 
 import Flux, MAT, ONNX, YAML
 

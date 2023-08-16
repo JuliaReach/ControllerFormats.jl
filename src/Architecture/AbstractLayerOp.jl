@@ -53,5 +53,9 @@ Return the input and output dimension of a layer operation.
 
 The pair ``(i, o)`` where ``i`` is the input dimension and ``o`` is the output
 dimension of `N`.
+
+### Notes
+
+This function is not exported due to name conflicts with other related packages.
 """
 dim(L::AbstractLayerOp) = (dim_in(L), dim_out(L))
