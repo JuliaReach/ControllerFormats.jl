@@ -24,6 +24,11 @@ N2 = FeedforwardNetwork([L1, L2])
 @test layers(N2) == [L1, L2]
 @test N2(x) == W2 * max.(W1 * x + b1, 0) + b2 == [-3.5, 1.25]
 
+# printing
+io = IOBuffer()
+println(io, N1)
+println(io, N2)
+
 # equality
 @test N1 == FeedforwardNetwork([L1])
 @test N1 != FeedforwardNetwork([L2])

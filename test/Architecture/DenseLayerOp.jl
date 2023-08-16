@@ -11,8 +11,13 @@ x = [1.0, 1]
 W = hcat([1 0.5; -0.5 0.5; -1 -0.5])
 b = [1.0, 0, -2]
 
-# output for `x` under identity activation
 L = DenseLayerOp(W, b, Id())
+
+# printing
+io = IOBuffer()
+println(io, L)
+
+# output for `x` under identity activation
 @test L(x) == W * x + b == [2.5, 0, -3.5]
 
 # invalid weight/bias combination
