@@ -61,11 +61,20 @@ function test_layer(L::DenseLayerOp{Tanh})
     @test L(x) ≈ [0.986, 0, -0.998] atol = 1e-3
 end
 
+function test_layer(L::DenseLayerOp{<:LeakyReLU})
+    @test L(x) == [2.5, 0, -0.035]
+end
+
 function test_layer(L::DenseLayerOp)
     return error("untested activation function: ", typeof(L.activation))
 end
 
 # run test with all activations
 for act in subtypes(ActivationFunction)
-    test_layer(DenseLayerOp(W, b, act()))
+    if act == LeakyReLU
+        act_inst = LeakyReLU(0.01)
+    else
+        act_inst = act()
+    end
+    test_layer(DenseLayerOp(W, b, act_inst))
 end

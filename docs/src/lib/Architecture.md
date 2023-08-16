@@ -56,6 +56,7 @@ Id
 ReLU
 Sigmoid
 Tanh
+LeakyReLU
 ```
 
 The following strings can be parsed as activation functions:
