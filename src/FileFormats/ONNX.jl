@@ -93,7 +93,7 @@ function read_ONNX(filename::String; input_dimension=nothing)
         # activation function
         if idx > length(ops)
             # last layer is assumed to be the identity
-            a = Id()
+            a = Architecture._id
         else
             op = ops[idx]
             @assert op isa Umlaut.Call "expected an activation function"
