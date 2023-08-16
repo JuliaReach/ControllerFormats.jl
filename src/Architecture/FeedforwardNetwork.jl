@@ -12,6 +12,8 @@ operations.
 
 The field `layers` contains the layer operations, so the number of layers is
 `length(layers) + 1`.
+
+Conversion from a `Flux.Chain` is supported.
 """
 struct FeedforwardNetwork{L} <: AbstractNeuralNetwork
     layers::L
@@ -47,3 +49,17 @@ end
 dim_in(N::FeedforwardNetwork) = dim_in(first(N.layers))
 
 dim_out(N::FeedforwardNetwork) = dim_out(last(N.layers))
+
+function load_Flux_convert_network()
+    return quote
+        function Base.convert(::Type{FeedforwardNetwork}, chain::Flux.Chain)
+            layers = [convert(DenseLayerOp, layer) for layer in chain.layers]
+            return FeedforwardNetwork(layers)
+        end
+
+        function Base.convert(::Type{Flux.Chain}, net::FeedforwardNetwork)
+            layers = [convert(Flux.Dense, layer) for layer in net.layers]
+            return Flux.Chain(layers)
+        end
+    end
+end

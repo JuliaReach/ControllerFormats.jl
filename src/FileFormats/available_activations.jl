@@ -1,22 +1,16 @@
-# always use the same instance of each activation function
-const _id = Id()
-const _relu = ReLU()
-const _sigmoid = Sigmoid()
-const _tanh = Tanh()
-
 const available_activations = Dict(
                                    # Id
-                                   "Id" => _id,
-                                   "linear" => _id,
-                                   "Linear" => _id,
-                                   "Affine" => _id,
+                                   "Id" => Architecture._id,
+                                   "linear" => Architecture._id,
+                                   "Linear" => Architecture._id,
+                                   "Affine" => Architecture._id,
                                    # ReLU
-                                   "relu" => _relu,
-                                   "ReLU" => _relu,
+                                   "relu" => Architecture._relu,
+                                   "ReLU" => Architecture._relu,
                                    # Sigmoid
-                                   "sigmoid" => _sigmoid,
-                                   "Sigmoid" => _sigmoid,
-                                   "σ" => _sigmoid,
+                                   "sigmoid" => Architecture._sigmoid,
+                                   "Sigmoid" => Architecture._sigmoid,
+                                   "σ" => Architecture._sigmoid,
                                    # Tanh
-                                   "tanh" => _tanh,
-                                   "Tanh" => _tanh)
+                                   "tanh" => Architecture._tanh,
+                                   "Tanh" => Architecture._tanh)
