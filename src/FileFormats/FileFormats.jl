@@ -10,7 +10,7 @@ using Requires
 using ReachabilityBase.Require
 
 export read_MAT,
-       read_NNet,
+       read_NNet, write_NNet,
        read_ONNX,
        read_POLAR,
        read_Sherlock, write_Sherlock,

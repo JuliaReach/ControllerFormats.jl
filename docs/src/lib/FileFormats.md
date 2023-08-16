@@ -28,5 +28,6 @@ read_YAML
 ## Writing neural networks
 
 ```@docs
+write_NNet
 write_Sherlock
 ```
