@@ -14,3 +14,10 @@ N2 = read_POLAR(file)
 rm(file)
 
 @test N == N2
+
+# unknown activation function
+W = hcat([1 0.5; -0.5 0.5; -1 -0.5])
+b = [1.0, 0, -2]
+N = FeedforwardNetwork([DenseLayerOp(W, b, TestActivation())])
+@test_throws ArgumentError write_POLAR(N, file)
+rm(file)

@@ -76,10 +76,16 @@ end
 
 # run test with all activations
 for act in subtypes(ActivationFunction)
-    if act == LeakyReLU
+    if act == TestActivation
+        continue
+    elseif act == LeakyReLU
         act_inst = LeakyReLU(0.01)
     else
         act_inst = act()
     end
     test_layer(DenseLayerOp(W, b, act_inst))
 end
+
+# leaky ReLU on a vector
+act = LeakyReLU(0.01)
+@test act([-1.0, 0, 1, -100]) == [-0.01, 0, 1, -1]

@@ -42,3 +42,9 @@ for (i, l) in enumerate(c.layers)
 
     @test compare_Flux_layer(l, c_back.layers[i])
 end
+
+# unknown activation function
+W = hcat([1 0.5; -0.5 0.5; -1 -0.5])
+b = [1.0, 0, -2]
+L = DenseLayerOp(W, b, TestActivation())
+@test_throws ArgumentError convert(Flux.Dense, L)
