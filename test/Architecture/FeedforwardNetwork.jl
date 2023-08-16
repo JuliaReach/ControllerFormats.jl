@@ -1,9 +1,3 @@
-# AbstractNeuralNetwork implementation
-struct TestNeuralNetwork <: AbstractNeuralNetwork end
-N = TestNeuralNetwork()
-dim_in(N)
-dim_out(N)
-
 # 2D input vector
 x = [1.0, 1]
 
@@ -14,6 +8,7 @@ b1 = [1.0, 0, -2]
 # network with a single layer
 L1 = DenseLayerOp(W1, b1, ReLU())
 N1 = FeedforwardNetwork([L1])
+@test layers(N1) == [L1]
 @test N1(x) == max.(W1 * x + b1, 0) == [2.5, 0, 0]
 
 # invalid layer combination
@@ -26,6 +21,7 @@ b2 = [-1.0, 0]
 # network with two layers
 L2 = DenseLayerOp(W2, b2, Id())
 N2 = FeedforwardNetwork([L1, L2])
+@test layers(N2) == [L1, L2]
 @test N2(x) == W2 * max.(W1 * x + b1, 0) + b2 == [-3.5, 1.25]
 
 # equality
@@ -36,6 +32,11 @@ N2 = FeedforwardNetwork([L1, L2])
 @test N1 ≈ FeedforwardNetwork([L1])
 @test N1 ≈ FeedforwardNetwork([DenseLayerOp(W1 .+ 1e-10, b1, ReLU())])
 @test !(N1 ≈ FeedforwardNetwork([L2]))
+
+# list/array interface
+@test length(N1) == 1 && length(N2) == 2
+@test N1[1] == L1 && N1[1:1] == [L1] && N2[2] == L2 && N2[1:2] == [L1, L2]
+@test N1[end] == L1 && N2[end] == L2
 
 # dimensions
 @test dim_in(N1) == 2 && dim_in(N2) == 2

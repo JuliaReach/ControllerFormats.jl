@@ -40,23 +40,7 @@ function _first_inconsistent_layer(L)
     return 0
 end
 
-(N::FeedforwardNetwork)(x) = reduce((a1, a2) -> a2 ∘ a1, N.layers)(x)
-
-function Base.:(==)(N1::FeedforwardNetwork, N2::FeedforwardNetwork)
-    return N1.layers == N2.layers
-end
-
-function Base.:isapprox(N1::FeedforwardNetwork, N2::FeedforwardNetwork;
-                        atol::Real=0, rtol=nothing)
-    if length(N1.layers) != length(N2.layers)
-        return false
-    end
-    return all(isapprox.(N1.layers, N2.layers; atol=atol, rtol=rtol))
-end
-
-dim_in(N::FeedforwardNetwork) = dim_in(first(N.layers))
-
-dim_out(N::FeedforwardNetwork) = dim_out(last(N.layers))
+layers(N::FeedforwardNetwork) = N.layers
 
 function load_Flux_convert_network()
     return quote

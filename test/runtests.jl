@@ -8,6 +8,9 @@ import Flux, MAT, ONNX, YAML
     @testset "DenseLayerOp" begin
         include("Architecture/DenseLayerOp.jl")
     end
+    @testset "AbstractNeuralNetwork" begin
+        include("Architecture/AbstractNeuralNetwork.jl")
+    end
     @testset "FeedforwardNetwork" begin
         include("Architecture/FeedforwardNetwork.jl")
     end
