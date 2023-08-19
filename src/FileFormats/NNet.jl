@@ -57,7 +57,8 @@ function read_NNet(filename::String)
 
         # read layers except for the output layer (with ReLU activation)
         T = DenseLayerOp{<:ActivationFunction,Matrix{Float32},Vector{Float32}}
-        layers = T[_read_layer_NNet(io, dim, Architecture._relu) for dim in layer_sizes[2:(end - 1)]]
+        layers = T[_read_layer_NNet(io, dim, Architecture._relu)
+                   for dim in layer_sizes[2:(end - 1)]]
 
         # read output layer (with identity activation)
         return push!(layers, _read_layer_NNet(io, last(layer_sizes), Architecture._id))

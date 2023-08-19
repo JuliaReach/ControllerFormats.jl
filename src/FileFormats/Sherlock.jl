@@ -68,7 +68,7 @@ function _read_Sherlock_POLAR(filename::String, read_activations, layer_type, re
             layers[i] = DenseLayerOp(W, b, activations(i))
         end
 
-        read_end(io)
+        return read_end(io)
     end
 
     return FeedforwardNetwork(layers)
@@ -137,7 +137,7 @@ function _write_Sherlock_POLAR(N::FeedforwardNetwork, filename::String,
         end
 
         # write end pattern
-        write_end(io)
+        return write_end(io)
     end
     return nothing
 end
