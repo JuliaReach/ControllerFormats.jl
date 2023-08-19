@@ -48,7 +48,8 @@ function read_MAT(filename::String; act_key::String,
     act_vec = data[act_key]
     n_layer_ops = length(bias_vec)  # number of layer operations
 
-    T = DenseLayerOp{<:ActivationFunction,Matrix{eltype(weights_vec[1])},Vector{eltype(bias_vec[1])}}
+    T = DenseLayerOp{<:ActivationFunction,Matrix{eltype(weights_vec[1])},
+                     Vector{eltype(bias_vec[1])}}
     layers = Vector{T}(undef, n_layer_ops)
 
     for i in 1:n_layer_ops
