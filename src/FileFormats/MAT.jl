@@ -69,7 +69,6 @@ function read_MAT(filename::String; act_key::String,
 end
 
 # convert to a Vector
-_vec(A::Vector) = A
 _vec(A::AbstractMatrix) = vec(A)
 _vec(A::Number) = [A]
 
@@ -77,8 +76,7 @@ _vec(A::Number) = [A]
 _mat(A::Matrix) = A
 _mat(A::Number) = hcat(A)
 function _mat(A::Array{<:Number,4})
-    # weights are sometimes stored as a multi-dimensional array with two flat
-    # dimensions
+    # weights may be stored as 4-dimensional array with two flat dimensions
     s = size(A)
     if s[3] == 1 && s[4] == 1
         return reshape(A, s[1], s[2])
