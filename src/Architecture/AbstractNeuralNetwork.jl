@@ -31,7 +31,7 @@ Return a list of the layers of a neural network.
 
 The list of layers.
 """
-function layers(::AbstractNeuralNetwork) end
+function layers(::AbstractNeuralNetwork) end  # COV_EXCL_LINE
 
 """
     dim_in(N::AbstractNeuralNetwork)
