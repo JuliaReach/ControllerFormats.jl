@@ -18,7 +18,6 @@ file = joinpath(@__DIR__, "sample_MAT_invalid.mat")
 # parse file
 @test_throws ArgumentError read_MAT(file; act_key="act_fcns")
 
-
 @test length(N.layers) == 4
 
 # alternative file with nested dictionary
