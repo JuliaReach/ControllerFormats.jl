@@ -41,3 +41,5 @@ end
         include("FileFormats/YAML.jl")
     end
 end
+
+include("Aqua.jl")
