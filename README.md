@@ -7,7 +7,7 @@
 [dev-img]: https://img.shields.io/badge/docs-latest-blue.svg
 [dev-url]: https://juliareach.github.io/ControllerFormats.jl/dev/
 [ci-img]: https://github.com/JuliaReach/ControllerFormats.jl/workflows/CI/badge.svg
-[ci-url]: https://github.com/JuliaReach/ControllerFormats.jl/actions/workflows/ci.yml
+[ci-url]: https://github.com/JuliaReach/ControllerFormats.jl/actions/workflows/test-master.yml
 [cov-img]: https://codecov.io/github/JuliaReach/ControllerFormats.jl/coverage.svg
 [cov-url]: https://app.codecov.io/github/JuliaReach/ControllerFormats.jl
 [aqua-img]: https://raw.githubusercontent.com/JuliaTesting/Aqua.jl/master/badge.svg
