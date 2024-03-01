@@ -35,14 +35,14 @@ function read_ONNX(filename::String; input_dimension=nothing)
 
     # parse input dimension if not provided
     if isnothing(input_dimension)
-        open(filename) do io
+        input_dimension = open(filename) do io
             onnx_raw_model = ONNX.decode(ONNX.ProtoDecoder(io), ONNX.ModelProto)
             input = onnx_raw_model.graph.input
             @assert input isa Vector{ONNX.ValueInfoProto} && length(input) == 1
             dimensions = input[1].var"#type".value.value.shape.dim
             @assert dimensions isa Vector{ONNX.var"TensorShapeProto.Dimension"} &&
                     length(dimensions) == 2 && dimensions[1].value.value == 1
-            return input_dimension = dimensions[2].value.value
+            return dimensions[2].value.value
         end
     end
 

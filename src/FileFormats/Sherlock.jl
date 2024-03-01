@@ -19,11 +19,11 @@ All layers including the output layer implicitly use a ReLU activation function.
 """
 function read_Sherlock(filename::String)
     # activation functions are not read from file because they are always ReLU
-    read_activations(io, n_layer_ops) = i -> Architecture._relu
+    read_activations(::IO, ::Int) = _ -> Architecture._relu
 
     layer_type = DenseLayerOp{ReLU,Matrix{Float32},Vector{Float32}}
 
-    read_end(io) = nothing
+    read_end(::IO) = nothing
 
     return _read_Sherlock_POLAR(filename, read_activations, layer_type, read_end)
 end
@@ -107,7 +107,7 @@ format.
 The Sherlock format requires that all activation functions are ReLU.
 """
 function write_Sherlock(N::FeedforwardNetwork, filename::String)
-    write_end(io) = nothing
+    write_end(::IO) = nothing
     return _write_Sherlock_POLAR(N, filename, _write_activation_Sherlock, write_end)
 end
 
@@ -142,7 +142,7 @@ function _write_Sherlock_POLAR(N::FeedforwardNetwork, filename::String,
     return nothing
 end
 
-function _write_activation_Sherlock(io, layer)
+function _write_activation_Sherlock(::IO, layer)
     @assert layer.activation isa ReLU "the Sherlock format requires ReLU " *
                                       "activations everywhere, but the network contains a " *
                                       "`$(typeof(layer.activation))` activation"
