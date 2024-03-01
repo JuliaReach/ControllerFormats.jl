@@ -51,7 +51,7 @@ function read_NNet(filename::String)
         layer_sizes = parse.(Int, split(readline(io), ",")[1:(n_layer_ops + 1)])
 
         # five lines of irrelevant information
-        for i in 1:5
+        for _ in 1:5
             line = readline(io)
         end
 
@@ -120,7 +120,7 @@ function write_NNet(N::FeedforwardNetwork, filename::String)
         println(io)
 
         # five lines of irrelevant information
-        for i in 1:5
+        for _ in 1:5
             println(io, "0")
         end
 
