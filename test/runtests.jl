@@ -7,6 +7,9 @@ import Flux, MAT, ONNX, YAML
 struct TestActivation <: ActivationFunction end
 
 @testset "Architecture" begin
+    @testset "AbstractLayerOp" begin
+        include("Architecture/AbstractLayerOp.jl")
+    end
     @testset "DenseLayerOp" begin
         include("Architecture/DenseLayerOp.jl")
     end
