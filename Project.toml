@@ -6,9 +6,11 @@ version = "0.2.2"
 ReachabilityBase = "379f33d0-9447-4353-bd03-d664070e549f"
 Reexport = "189a3867-3050-52da-a836-e630ba90ab69"
 Requires = "ae029012-a4dd-5104-9daa-d747884805df"
+Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
 
 [compat]
 ReachabilityBase = "0.1.1 - 0.2"
 Reexport = "0.2, 1"
 Requires = "0.5, 1"
+Statistics = "<0.0.1, 1.6"
 julia = "1.6"

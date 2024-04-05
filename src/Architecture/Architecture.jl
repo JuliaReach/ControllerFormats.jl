@@ -6,15 +6,18 @@ Module containing data structures to represent controllers.
 module Architecture
 
 using Requires
+using Statistics: mean
 
 export AbstractNeuralNetwork, FeedforwardNetwork,
        AbstractLayerOp, DenseLayerOp,
+       AbstractPoolingLayerOp, MaxPoolingLayerOp, MeanPoolingLayerOp,
        layers, dim_in, dim_out,
        ActivationFunction, Id, ReLU, Sigmoid, Tanh, LeakyReLU
 
 include("ActivationFunction.jl")
 include("LayerOps/AbstractLayerOp.jl")
 include("LayerOps/DenseLayerOp.jl")
+include("LayerOps/PoolingLayerOp.jl")
 include("NeuralNetworks/AbstractNeuralNetwork.jl")
 include("NeuralNetworks/FeedforwardNetwork.jl")
 
