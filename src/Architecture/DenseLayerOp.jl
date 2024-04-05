@@ -33,7 +33,8 @@ function _isconsistent(weights, bias)
     return size(weights, 1) == length(bias)
 end
 
-(l::DenseLayerOp)(x) = l.activation.(l.weights * x .+ l.bias)
+# application to a vector
+(L::DenseLayerOp)(x) = L.activation.(L.weights * x .+ L.bias)
 
 Base.length(L::DenseLayerOp) = length(L.bias)
 

@@ -1,11 +1,5 @@
 using ReachabilityBase.Subtypes: subtypes
 
-# AbstractLayerOp implementation
-struct TestLayerOp <: AbstractLayerOp end
-L = TestLayerOp()
-dim_in(L)
-dim_out(L)
-
 # 2D input vector and 2x3 layer
 x = [1.0, 1]
 W = hcat([1 0.5; -0.5 0.5; -1 -0.5])
