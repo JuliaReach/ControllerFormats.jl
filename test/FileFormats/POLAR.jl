@@ -6,6 +6,10 @@ N = read_POLAR(file)
 
 @test length(N.layers) == 4
 
+# invalid format
+@test_throws ArgumentError read_POLAR(joinpath(@__DIR__, "sample_POLAR_invalid1"))
+@test_throws ArgumentError read_POLAR(joinpath(@__DIR__, "sample_POLAR_invalid2"))
+
 # write network back to file and re-read it
 file = joinpath(@__DIR__, "sample_POLAR_output")
 
