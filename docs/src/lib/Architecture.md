@@ -63,6 +63,7 @@ AbstractPoolingLayerOp
 
 ```@docs
 DenseLayerOp
+ConvolutionalLayerOp
 FlattenLayerOp
 MaxPoolingLayerOp
 MeanPoolingLayerOp

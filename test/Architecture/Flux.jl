@@ -1,5 +1,9 @@
 import Flux
 
+################
+# Dense layers #
+################
+
 L1 = Flux.Dense(1, 2, Flux.relu)
 L1.weight .= 1, 2
 L1.bias .= 3, 4
@@ -48,3 +52,19 @@ W = hcat([1 0.5; -0.5 0.5; -1 -0.5])
 b = [1.0, 0, -2]
 L = DenseLayerOp(W, b, TestActivation())
 @test_throws ArgumentError convert(Flux.Dense, L)
+
+########################
+# Convolutional layers #
+########################
+
+LC = Flux.Conv((2, 2), 1 => 1, Flux.relu)
+LC.weight .= reshape([1 0; -1 2], (2, 2, 1, 1))
+LC.bias .= 1
+
+# layer conversion
+op = convert(ConvolutionalLayerOp, LC)
+@test op.weights[1] == LC.weight[:, :, :]
+@test op.bias == LC.bias
+@test op.activation == ReLU()
+L_back = convert(Flux.Conv, op)
+@test compare_Flux_layer(LC, L_back)
