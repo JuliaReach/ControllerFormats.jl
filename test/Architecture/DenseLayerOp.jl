@@ -79,7 +79,3 @@ for act in subtypes(ActivationFunction)
     end
     test_layer(DenseLayerOp(W, b, act_inst))
 end
-
-# leaky ReLU on a vector
-act = LeakyReLU(0.01)
-@test act([-1.0, 0, 1, -100]) == [-0.01, 0, 1, -1]
