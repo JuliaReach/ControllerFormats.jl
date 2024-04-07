@@ -73,7 +73,7 @@ dim_in(L::DenseLayerOp) = size(L.weights, 2)
 
 dim_out(L::DenseLayerOp) = length(L.bias)
 
-function load_Flux_convert_layer()
+function load_Flux_convert_Dense_layer()
     return quote
         function Base.convert(::Type{DenseLayerOp}, layer::Flux.Dense)
             act = get(activations_Flux, layer.σ, nothing)
