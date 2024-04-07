@@ -20,7 +20,7 @@ struct DenseLayerOp{F,W,B} <: AbstractLayerOp
 
     function DenseLayerOp(weights::W, bias::B, activation::F;
                           validate=Val(true)) where {F,W,B}
-        if validate isa Val{true} && !_isconsistent(weights, bias)
+        if validate isa Val{true} && !_isconsistent_DenseLayerOp(weights, bias)
             throw(ArgumentError("inconsistent dimensions of weights " *
                                 "($(size(weights, 1))) and bias ($(length(bias)))"))
         end
@@ -29,7 +29,7 @@ struct DenseLayerOp{F,W,B} <: AbstractLayerOp
     end
 end
 
-function _isconsistent(weights, bias)
+function _isconsistent_DenseLayerOp(weights, bias)
     return size(weights, 1) == length(bias)
 end
 
