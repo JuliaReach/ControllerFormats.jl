@@ -9,7 +9,7 @@ using Requires
 using Statistics: mean
 
 export AbstractNeuralNetwork, FeedforwardNetwork,
-       AbstractLayerOp, DenseLayerOp,
+       AbstractLayerOp, DenseLayerOp, FlattenLayerOp,
        AbstractPoolingLayerOp, MaxPoolingLayerOp, MeanPoolingLayerOp,
        layers, dim_in, dim_out,
        ActivationFunction, Id, ReLU, Sigmoid, Tanh, LeakyReLU
@@ -17,6 +17,7 @@ export AbstractNeuralNetwork, FeedforwardNetwork,
 include("ActivationFunction.jl")
 include("LayerOps/AbstractLayerOp.jl")
 include("LayerOps/DenseLayerOp.jl")
+include("LayerOps/FlattenLayerOp.jl")
 include("LayerOps/PoolingLayerOp.jl")
 include("NeuralNetworks/AbstractNeuralNetwork.jl")
 include("NeuralNetworks/FeedforwardNetwork.jl")

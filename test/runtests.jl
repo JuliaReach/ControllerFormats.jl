@@ -16,6 +16,9 @@ struct TestActivation <: ActivationFunction end
     @testset "DenseLayerOp" begin
         include("Architecture/DenseLayerOp.jl")
     end
+    @testset "FlattenLayerOp" begin
+        include("Architecture/FlattenLayerOp.jl")
+    end
     @testset "PoolingLayerOp" begin
         include("Architecture/PoolingLayerOp.jl")
     end
