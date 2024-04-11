@@ -64,7 +64,7 @@ function Base.:isapprox(L1::DenseLayerOp, L2::DenseLayerOp; atol::Real=0,
 end
 
 function Base.show(io::IO, L::DenseLayerOp)
-    str = "$(string(DenseLayerOp)) with $(dim_in(L)) inputs, $(dim_out(L)) " *
+    str = "$DenseLayerOp with $(dim_in(L)) inputs, $(dim_out(L)) " *
           "outputs, and $(L.activation) activation"
     return print(io, str)
 end
