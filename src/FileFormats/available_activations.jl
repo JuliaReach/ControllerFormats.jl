@@ -11,6 +11,7 @@ const available_activations = Dict(
                                    "sigmoid" => Architecture._sigmoid,
                                    "Sigmoid" => Architecture._sigmoid,
                                    "σ" => Architecture._sigmoid,
+                                   "logsig" => Architecture._sigmoid,
                                    # Tanh
                                    "tanh" => Architecture._tanh,
                                    "Tanh" => Architecture._tanh)
