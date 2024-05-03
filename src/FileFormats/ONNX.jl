@@ -73,7 +73,10 @@ function read_ONNX(filename::String; input_dimension=nothing)
         idx += 1
     end
     n_layers = div(idx - 2, 2)
-    @assert length(ops) == 4 * n_layers
+    # 4 operations per layer +1 for the input operation
+    # (-1 potentially for implicit identity activation in the last layer)
+    @assert length(ops) == 4 * n_layers || length(ops) == 4 * n_layers + 1 "" *
+        "each layer should consist of 4 operations (except possibly the last one)"
     T = DenseLayerOp{<:ActivationFunction,Matrix{Float32},Vector{Float32}}
     layers = T[]
     layer = 1
@@ -98,9 +101,16 @@ function read_ONNX(filename::String; input_dimension=nothing)
             op = ops[idx]
             @assert op isa Umlaut.Call "expected an activation function"
             args = op.args
-            @assert length(args) == 2
-            @assert args[2]._op.id == idx - 1
-            a = available_activations[string(args[1])]
+            if length(args) == 1
+                @assert args[1]._op.id == idx - 1
+                act = op.fn
+            elseif length(args) == 2
+                @assert args[2]._op.id == idx - 1
+                act = args[1]
+            else
+                @assert false "cannot parse activation $op"
+            end
+            a = available_activations[string(act)]
             idx += 1
         end
 
