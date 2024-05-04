@@ -76,7 +76,7 @@ function read_ONNX(filename::String; input_dimension=nothing)
     # 4 operations per layer +1 for the input operation
     # (-1 potentially for implicit identity activation in the last layer)
     @assert length(ops) == 4 * n_layers || length(ops) == 4 * n_layers + 1 "" *
-        "each layer should consist of 4 operations (except possibly the last one)"
+                                                                           "each layer should consist of 4 operations (except possibly the last one)"
     T = DenseLayerOp{<:ActivationFunction,Matrix{Float32},Vector{Float32}}
     layers = T[]
     layer = 1
