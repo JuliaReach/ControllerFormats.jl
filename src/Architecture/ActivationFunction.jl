@@ -18,6 +18,8 @@ struct Id <: ActivationFunction end
 
 (::Id)(x) = x
 
+Base.show(io::IO, ::Id) = print(io, Id)
+
 """
     ReLU
 
@@ -30,6 +32,8 @@ Rectified linear unit (ReLU) activation.
 struct ReLU <: ActivationFunction end
 
 (::ReLU)(x) = max.(x, zero(eltype(x)))
+
+Base.show(io::IO, ::ReLU) = print(io, ReLU)
 
 """
     Sigmoid
@@ -44,6 +48,8 @@ struct Sigmoid <: ActivationFunction end
 
 (::Sigmoid)(x) = @. 1 / (1 + exp(-x))
 
+Base.show(io::IO, ::Sigmoid) = print(io, Sigmoid)
+
 """
     Tanh
 
@@ -56,6 +62,8 @@ Hyperbolic tangent activation.
 struct Tanh <: ActivationFunction end
 
 (::Tanh)(x) = tanh.(x)
+
+Base.show(io::IO, ::Tanh) = print(io, Tanh)
 
 """
     LeakyReLU{N<:Number}
@@ -77,6 +85,8 @@ end
 
 (lr::LeakyReLU)(x::Number) = x >= zero(x) ? x : lr.slope * x
 (lr::LeakyReLU)(x::AbstractVector) = lr.(x)
+
+Base.show(io::IO, lr::LeakyReLU) = print(io, "$LeakyReLU($(lr.slope))")
 
 # constant instances of each activation function
 const _id = Id()
