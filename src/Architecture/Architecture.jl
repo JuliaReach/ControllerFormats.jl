@@ -7,16 +7,16 @@ module Architecture
 
 using Requires
 
-export AbstractNeuralNetwork, AbstractLayerOp,
-       FeedforwardNetwork, DenseLayerOp,
+export AbstractNeuralNetwork, FeedforwardNetwork,
+       AbstractLayerOp, DenseLayerOp,
        layers, dim_in, dim_out,
        ActivationFunction, Id, ReLU, Sigmoid, Tanh, LeakyReLU
 
-include("AbstractNeuralNetwork.jl")
-include("AbstractLayerOp.jl")
 include("ActivationFunction.jl")
-include("DenseLayerOp.jl")
-include("FeedforwardNetwork.jl")
+include("LayerOps/AbstractLayerOp.jl")
+include("LayerOps/DenseLayerOp.jl")
+include("NeuralNetworks/AbstractNeuralNetwork.jl")
+include("NeuralNetworks/FeedforwardNetwork.jl")
 
 include("init.jl")
 

@@ -1,5 +1,5 @@
 """
-    DenseLayerOp{F, M<:AbstractMatrix, B} <: AbstractLayerOp
+    DenseLayerOp{F, M, B} <: AbstractLayerOp
 
 A dense layer operation is an affine map followed by an activation function.
 
@@ -13,23 +13,23 @@ A dense layer operation is an affine map followed by an activation function.
 
 Conversion from a `Flux.Dense` is supported.
 """
-struct DenseLayerOp{F,M<:AbstractMatrix,B} <: AbstractLayerOp
-    weights::M
+struct DenseLayerOp{F,W,B} <: AbstractLayerOp
+    weights::W
     bias::B
     activation::F
 
-    function DenseLayerOp(weights::M, bias::B, activation::F;
-                          validate=Val(true)) where {F,M<:AbstractMatrix,B}
-        if validate isa Val{true} && !_isconsistent(weights, bias)
+    function DenseLayerOp(weights::W, bias::B, activation::F;
+                          validate=Val(true)) where {F,W,B}
+        if validate isa Val{true} && !_isconsistent_DenseLayerOp(weights, bias)
             throw(ArgumentError("inconsistent dimensions of weights " *
                                 "($(size(weights, 1))) and bias ($(length(bias)))"))
         end
 
-        return new{F,M,B}(weights, bias, activation)
+        return new{F,W,B}(weights, bias, activation)
     end
 end
 
-function _isconsistent(weights, bias)
+function _isconsistent_DenseLayerOp(weights, bias)
     return size(weights, 1) == length(bias)
 end
 
@@ -73,7 +73,7 @@ dim_in(L::DenseLayerOp) = size(L.weights, 2)
 
 dim_out(L::DenseLayerOp) = length(L.bias)
 
-function load_Flux_convert_layer()
+function load_Flux_convert_Dense_layer()
     return quote
         function Base.convert(::Type{DenseLayerOp}, layer::Flux.Dense)
             act = get(activations_Flux, layer.σ, nothing)

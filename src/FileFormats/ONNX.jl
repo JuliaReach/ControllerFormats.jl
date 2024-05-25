@@ -109,7 +109,7 @@ function read_ONNX(filename::String; input_dimension=nothing)
                 @assert args[2]._op.id == idx - 1
                 act = args[1]
             else
-                @assert false "cannot parse activation $op"
+                throw(ArgumentError("cannot parse activation $op"))  # COV_EXCL_LINE
             end
             a = available_activations[string(act)]
             idx += 1
