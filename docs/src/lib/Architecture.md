@@ -53,10 +53,20 @@ dim_out(::AbstractLayerOp)
 ControllerFormats.Architecture.dim(::AbstractLayerOp)
 ```
 
+#### More specific layer interfaces
+
+```@docs
+AbstractPoolingLayerOp
+```
+
 #### Implementation
 
 ```@docs
 DenseLayerOp
+ConvolutionalLayerOp
+FlattenLayerOp
+MaxPoolingLayerOp
+MeanPoolingLayerOp
 ```
 
 ### Activation functions

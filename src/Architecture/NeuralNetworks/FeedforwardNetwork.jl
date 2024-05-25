@@ -32,13 +32,19 @@ end
 function _first_inconsistent_layer(L)
     prev = nothing
     for (i, l) in enumerate(L)
-        if !isnothing(prev) && dim_in(l) != dim_out(prev)
+        if !isnothing(prev) &&
+           ((!isnothing(dim_in(l)) && !isnothing(dim_out(prev)) && dim_in(l) != dim_out(prev)) ||
+            !_iscompatible(size(prev), size(l)))
             return i
         end
         prev = l
     end
     return 0
 end
+
+_iscompatible(t1::Tuple, t2::Tuple) = _iscompatible(t1[2], t2[1])
+_iscompatible(i::Int, j::Int) = i == j
+_iscompatible(i, ::Nothing) = true
 
 layers(N::FeedforwardNetwork) = N.layers
 
