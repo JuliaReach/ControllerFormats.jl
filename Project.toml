@@ -1,6 +1,6 @@
 name = "ControllerFormats"
 uuid = "02ac4b2c-022a-44aa-84a5-ea45a5754bcc"
-version = "0.2.2"
+version = "0.2.3"
 
 [deps]
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
