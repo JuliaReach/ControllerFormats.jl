@@ -90,3 +90,5 @@ function (L::AbstractPoolingLayerOp)(T)
     end
     return O
 end
+
+size(::AbstractPoolingLayerOp) = (3, 3)

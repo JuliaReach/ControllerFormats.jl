@@ -48,3 +48,16 @@ println(io, N2)
 @test dim_in(N1) == 2 && dim_in(N2) == 2
 @test dim_out(N1) == 3 && dim_out(N2) == 2
 @test dim(N1) == (2, 3) && dim(N2) == (2, 2)
+
+# network with all layer types
+L1 = ConvolutionalLayerOp([reshape([1 0; -1 2], (2, 2, 1))], [1], ReLU())
+L2 = MaxPoolingLayerOp(1, 1)
+L3 = FlattenLayerOp()
+W = zeros(2, 9); W[1, 1] = W[2, 2] = 1
+L4 = DenseLayerOp(W, [1.0 0], ReLU())
+N3 = FeedforwardNetwork([L1, L2, L3, L4])
+T441 = reshape([0 4 2 1; -1 0 1 -2; 3 1 2 0; 0 1 4 1], (4, 4, 1))
+@test N3(T441) == [3.0 2; 8 7]
+
+# incompatible dimensions
+@test_throws ArgumentError FeedforwardNetwork([L1, L4])

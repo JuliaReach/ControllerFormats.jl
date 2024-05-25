@@ -115,6 +115,8 @@ function Base.show(io::IO, L::ConvolutionalLayerOp)
     return print(io, str)
 end
 
+size(::ConvolutionalLayerOp) = (3, 3)
+
 function load_Flux_convert_Conv_layer()
     return quote
         function Base.convert(::Type{ConvolutionalLayerOp}, layer::Flux.Conv)

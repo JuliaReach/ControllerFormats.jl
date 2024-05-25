@@ -39,3 +39,6 @@ for (L, LT) in zip(Ls, LTs)
     @test L != LT(2, 2) && L != LT(3, 3)
 end
 @test L1 != L2
+
+# size
+@test size(L1) == (3, 3)

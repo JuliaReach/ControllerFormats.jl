@@ -9,6 +9,7 @@ using Requires
 using LinearAlgebra: dot
 using Statistics: mean
 
+import Base: size
 export AbstractNeuralNetwork, FeedforwardNetwork,
        AbstractLayerOp, DenseLayerOp, ConvolutionalLayerOp, FlattenLayerOp,
        AbstractPoolingLayerOp, MaxPoolingLayerOp, MeanPoolingLayerOp,

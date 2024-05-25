@@ -6,3 +6,6 @@ L = FlattenLayerOp()
 
 # equality
 @test L == FlattenLayerOp()
+
+# size
+@test size(L) == (nothing, 1)

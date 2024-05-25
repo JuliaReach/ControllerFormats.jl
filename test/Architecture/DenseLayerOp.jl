@@ -42,6 +42,7 @@ println(io, L)
 @test dim_out(L) == 3
 @test dim(L) == (2, 3)
 @test length(L) == 3
+@test size(L) == (1, 1)
 
 # test methods for all activations
 function test_layer(L::DenseLayerOp{Id})

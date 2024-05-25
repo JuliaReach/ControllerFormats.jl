@@ -54,6 +54,9 @@ println(io, L)
       !(L ≈ ConvolutionalLayerOp(Ws, [b1 .+ 1], ReLU())) &&
       !(L ≈ ConvolutionalLayerOp(Ws, bs, Id()))
 
+# size
+@test size(L) == (3, 3)
+
 # kernel size and number of filters
 @test kernel(L) == kernel(L2) == (2, 2, 1)
 @test n_filters(L) == 1 && n_filters(L2) == 2

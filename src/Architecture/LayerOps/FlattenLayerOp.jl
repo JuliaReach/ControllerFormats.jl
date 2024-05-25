@@ -42,3 +42,5 @@ function (L::FlattenLayerOp)(T)
     end
     return vec(permutedims(T, (2, 1, 3:length(s)...)))
 end
+
+size(::FlattenLayerOp) = (nothing, 1)
