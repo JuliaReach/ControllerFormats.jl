@@ -53,7 +53,8 @@ println(io, N2)
 L1 = ConvolutionalLayerOp([reshape([1 0; -1 2], (2, 2, 1))], [1], ReLU())
 L2 = MaxPoolingLayerOp(1, 1)
 L3 = FlattenLayerOp()
-W = zeros(2, 9); W[1, 1] = W[2, 2] = 1
+W = zeros(2, 9);
+W[1, 1] = W[2, 2] = 1;
 L4 = DenseLayerOp(W, [1.0 0], ReLU())
 N3 = FeedforwardNetwork([L1, L2, L3, L4])
 T441 = reshape([0 4 2 1; -1 0 1 -2; 3 1 2 0; 0 1 4 1], (4, 4, 1))
