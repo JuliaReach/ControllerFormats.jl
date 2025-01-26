@@ -93,14 +93,3 @@ const _id = Id()
 const _relu = ReLU()
 const _sigmoid = Sigmoid()
 const _tanh = Tanh()
-
-function load_Flux_activations()
-    return quote
-        activations_Flux = Dict(Flux.identity => _id,
-                                _id => Flux.identity,
-                                Flux.relu => _relu,
-                                _relu => Flux.relu,
-                                Flux.sigmoid => _sigmoid,
-                                _sigmoid => Flux.sigmoid)
-    end
-end
