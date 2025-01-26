@@ -10,9 +10,32 @@ Requires = "ae029012-a4dd-5104-9daa-d747884805df"
 Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
 
 [compat]
+Flux = "0.13 - 0.16"
 LinearAlgebra = "<0.0.1, 1.6"
+MAT = "0.10"
+ONNX = "0.2"
 ReachabilityBase = "0.1.1 - 0.3"
 Reexport = "0.2, 1"
 Requires = "0.5, 1"
 Statistics = "<0.0.1, 1.6"
+YAML = "0.3 - 0.4"
 julia = "1.6"
+
+[extensions]
+FluxExt = "Flux"
+MATExt = "MAT"
+ONNXExt = "ONNX"
+YAMLExt = "YAML"
+
+[extras]
+Flux = "587475ba-b771-5e3f-ad9e-33799f191a9c"
+MAT = "23992714-dd62-5051-b70f-ba57cb901cac"
+ONNX = "d0dd6a25-fac6-55c0-abf7-829e0c774d20"
+YAML = "ddb6d928-2868-570f-bddf-ab3f9cf99eb6"
+
+[weakdeps]
+Flux = "587475ba-b771-5e3f-ad9e-33799f191a9c"
+MAT = "23992714-dd62-5051-b70f-ba57cb901cac"
+ONNX = "d0dd6a25-fac6-55c0-abf7-829e0c774d20"
+Requires = "ae029012-a4dd-5104-9daa-d747884805df"
+YAML = "ddb6d928-2868-570f-bddf-ab3f9cf99eb6"
