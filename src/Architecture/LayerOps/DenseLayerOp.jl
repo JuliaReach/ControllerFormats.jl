@@ -74,23 +74,3 @@ dim_in(L::DenseLayerOp) = size(L.weights, 2)
 dim_out(L::DenseLayerOp) = length(L.bias)
 
 size(::DenseLayerOp) = (1, 1)
-
-function load_Flux_convert_Dense_layer()
-    return quote
-        function Base.convert(::Type{DenseLayerOp}, layer::Flux.Dense)
-            act = get(activations_Flux, layer.σ, nothing)
-            if isnothing(act)
-                throw(ArgumentError("unsupported activation function $(layer.σ)"))
-            end
-            return DenseLayerOp(layer.weight, layer.bias, act)
-        end
-
-        function Base.convert(::Type{Flux.Dense}, layer::DenseLayerOp)
-            act = get(activations_Flux, layer.activation, nothing)
-            if isnothing(act)
-                throw(ArgumentError("unsupported activation function $(layer.activation)"))
-            end
-            return Flux.Dense(layer.weights, layer.bias, act)
-        end
-    end
-end

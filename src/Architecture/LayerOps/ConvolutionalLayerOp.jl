@@ -116,39 +116,3 @@ function Base.show(io::IO, L::ConvolutionalLayerOp)
 end
 
 size(::ConvolutionalLayerOp) = (3, 3)
-
-function load_Flux_convert_Conv_layer()
-    return quote
-        function Base.convert(::Type{ConvolutionalLayerOp}, layer::Flux.Conv)
-            if !all(isone, layer.stride)
-                throw(ArgumentError("stride $(layer.stride) != 1 is not supported"))  # COV_EXCL_LINE
-            end
-            if !all(iszero, layer.pad)
-                throw(ArgumentError("pad $(layer.pad) != 0 is not supported"))  # COV_EXCL_LINE
-            end
-            if !all(isone, layer.dilation)
-                throw(ArgumentError("dilation $(layer.dilation) != 1 is not supported"))  # COV_EXCL_LINE
-            end
-            if !all(isone, layer.groups)
-                throw(ArgumentError("groups $(layer.groups) != 1 is not supported"))  # COV_EXCL_LINE
-            end
-            act = get(activations_Flux, layer.σ, nothing)
-            if isnothing(act)
-                throw(ArgumentError("unsupported activation function $(layer.σ)"))  # COV_EXCL_LINE
-            end
-            # Flux stores a 4D matrix instead of a vector of 3D matrices
-            weights = @inbounds [layer.weight[:, :, :, i] for i in 1:size(layer.weight, 4)]
-            return ConvolutionalLayerOp(weights, layer.bias, act)
-        end
-
-        function Base.convert(::Type{Flux.Conv}, layer::ConvolutionalLayerOp)
-            act = get(activations_Flux, layer.activation, nothing)
-            if isnothing(act)
-                throw(ArgumentError("unsupported activation function $(layer.activation)"))  # COV_EXCL_LINE
-            end
-            # Flux stores a 4D matrix instead of a vector of 3D matrices
-            weights = cat(layer.weights...; dims=4)
-            return Flux.Conv(weights, layer.bias, act)
-        end
-    end
-end

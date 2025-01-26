@@ -5,7 +5,6 @@ Module containing data structures to represent controllers.
 """
 module Architecture
 
-using Requires
 using LinearAlgebra: dot
 using Statistics: mean
 

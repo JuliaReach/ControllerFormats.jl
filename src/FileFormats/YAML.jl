@@ -13,10 +13,8 @@ requires to load the [`YAML.jl` library](https://github.com/JuliaData/YAML.jl).
 A [`FeedforwardNetwork`](@ref).
 """
 function read_YAML(filename::String)
-    require(@__MODULE__, :YAML; fun_name="read_YAML")
-
     # read data as a Dict
-    data = load_file(filename)
+    data = _load_YAML(filename)
 
     # read data
     !haskey(data, "weights") && throw(ArgumentError("could not find key `'weights'`"))
@@ -40,4 +38,11 @@ function read_YAML(filename::String)
     end
 
     return FeedforwardNetwork(layers)
+end
+
+# defined in `YAMLExt.jl`
+function _load_YAML(filename)
+    mod = isdefined(Base, :get_extension) ? Base.get_extension(@__MODULE__, :YAMLExt) : @__MODULE__
+    require(mod, :YAML; fun_name="read_YAML")
+    return nothing
 end

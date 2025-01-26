@@ -6,7 +6,6 @@ Module to parse and write file formats of controllers.
 module FileFormats
 
 using ..Architecture
-using Requires
 using ReachabilityBase.Require
 
 export read_MAT,
@@ -16,8 +15,6 @@ export read_MAT,
        read_Sherlock, write_Sherlock,
        read_YAML
 
-include("init.jl")
-
 include("available_activations.jl")
 
 include("MAT.jl")
@@ -26,5 +23,7 @@ include("ONNX.jl")
 include("POLAR.jl")
 include("Sherlock.jl")
 include("YAML.jl")
+
+include("init.jl")
 
 end  # module
