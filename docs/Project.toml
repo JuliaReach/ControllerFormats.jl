@@ -7,5 +7,5 @@ YAML = "ddb6d928-2868-570f-bddf-ab3f9cf99eb6"
 [compat]
 Documenter = "1"
 MAT = "0.10"
-ONNX = "0.2"
+ONNX = "0.2 - 0.3"
 YAML = "0.3 - 0.4"
