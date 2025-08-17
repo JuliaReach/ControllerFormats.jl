@@ -45,9 +45,13 @@ for (type_name, normal_name, agg_function, agg_name) in
             end
         end
 
-        window(L::$type_name) = (L.p, L.q)
+        function window(L::$type_name)
+            return (L.p, L.q)
+        end
 
-        aggregation(::$type_name) = $agg_function
+        function aggregation(::$type_name)
+            return $agg_function
+        end
 
         function Base.:(==)(L1::$type_name, L2::$type_name)
             return window(L1) == window(L2)

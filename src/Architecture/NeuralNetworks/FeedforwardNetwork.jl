@@ -42,9 +42,17 @@ function _first_inconsistent_layer(L)
     return 0
 end
 
-_iscompatible(t1::Tuple, t2::Tuple) = _iscompatible(t1[2], t2[1])
-_iscompatible(i::Int, j::Int) = i == j
-_iscompatible(i, ::Nothing) = true
+function _iscompatible(t1::Tuple, t2::Tuple)
+    return _iscompatible(t1[2], t2[1])
+end
+
+function _iscompatible(i::Int, j::Int)
+    return i == j
+end
+
+function _iscompatible(::Any, ::Nothing)
+    return true
+end
 
 layers(N::FeedforwardNetwork) = N.layers
 
