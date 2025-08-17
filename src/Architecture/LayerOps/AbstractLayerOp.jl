@@ -23,7 +23,7 @@ Return the input dimension of a layer operation.
 
 The input dimension of `L`.
 """
-function dim_in(::AbstractLayerOp) end
+function dim_in(::AbstractLayerOp) end  # COV_EXCL_LINE
 
 """
     dim_out(L::AbstractLayerOp)
@@ -38,7 +38,7 @@ Return the output dimension of a layer operation.
 
 The output dimension of `L`.
 """
-function dim_out(::AbstractLayerOp) end
+function dim_out(::AbstractLayerOp) end  # COV_EXCL_LINE
 
 """
     dim(L::AbstractLayerOp)
