@@ -10,7 +10,7 @@ Module for representations of controllers.
 """
 module ControllerFormats
 
-using Reexport
+using Reexport: @reexport
 
 include("Architecture/Architecture.jl")
 

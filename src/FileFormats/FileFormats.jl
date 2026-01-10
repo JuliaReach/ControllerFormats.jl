@@ -6,8 +6,8 @@ Module to parse and write file formats of controllers.
 module FileFormats
 
 using ..Architecture
-using Requires
-using ReachabilityBase.Require
+using Requires: @require
+using ReachabilityBase.Require: require
 
 export read_MAT,
        read_NNet, write_NNet,

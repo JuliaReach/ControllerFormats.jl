@@ -93,13 +93,13 @@ function Base.:(==)(L1::ConvolutionalLayerOp, L2::ConvolutionalLayerOp)
            L1.activation == L2.activation
 end
 
-function Base.:isapprox(L1::ConvolutionalLayerOp, L2::ConvolutionalLayerOp; atol::Real=0,
-                        rtol=nothing)
+function Base.isapprox(L1::ConvolutionalLayerOp, L2::ConvolutionalLayerOp;
+                       atol::Real=0, rtol=nothing)
     if isnothing(rtol)
         if iszero(atol)
             N = @inbounds promote_type(eltype(first(L1.weights)), eltype(first(L2.weights)),
                                        eltype(L1.bias), eltype(L2.bias))
-            rtol = Base.rtoldefault(N)
+            rtol = rtoldefault(N)
         else
             rtol = zero(atol)
         end

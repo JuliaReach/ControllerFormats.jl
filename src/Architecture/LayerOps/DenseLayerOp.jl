@@ -44,8 +44,7 @@ function Base.:(==)(L1::DenseLayerOp, L2::DenseLayerOp)
            L1.activation == L2.activation
 end
 
-function Base.:isapprox(L1::DenseLayerOp, L2::DenseLayerOp; atol::Real=0,
-                        rtol=nothing)
+function Base.isapprox(L1::DenseLayerOp, L2::DenseLayerOp; atol::Real=0, rtol=nothing)
     if dim_in(L1) != dim_in(L2) || dim_out(L1) != dim_out(L2)
         return false
     end
@@ -53,7 +52,7 @@ function Base.:isapprox(L1::DenseLayerOp, L2::DenseLayerOp; atol::Real=0,
         if iszero(atol)
             N = promote_type(eltype(L1.weights), eltype(L2.weights),
                              eltype(L1.bias), eltype(L2.bias))
-            rtol = Base.rtoldefault(N)
+            rtol = rtoldefault(N)
         else
             rtol = zero(atol)
         end
