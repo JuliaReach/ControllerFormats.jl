@@ -5,8 +5,9 @@ Module containing data structures to represent controllers.
 """
 module Architecture
 
-using Requires
+using Base: rtoldefault  # note: this is an internal function
 using LinearAlgebra: dot
+using Requires: @require
 using Statistics: mean
 
 import Base: size

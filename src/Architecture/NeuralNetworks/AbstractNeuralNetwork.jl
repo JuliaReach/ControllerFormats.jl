@@ -97,8 +97,8 @@ function Base.:(==)(N1::AbstractNeuralNetwork, N2::AbstractNeuralNetwork)
     return layers(N1) == layers(N2)
 end
 
-function Base.:isapprox(N1::AbstractNeuralNetwork, N2::AbstractNeuralNetwork;
-                        atol::Real=0, rtol=nothing)
+function Base.isapprox(N1::AbstractNeuralNetwork, N2::AbstractNeuralNetwork;
+                       atol::Real=0, rtol=nothing)
     if length(N1) != length(N2)
         return false
     end
