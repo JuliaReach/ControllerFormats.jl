@@ -30,10 +30,8 @@ Otherwise the outer dictionary directly contains the following:
 """
 function read_MAT(filename::String; act_key::String,
                   net_key::Union{String,Nothing}=nothing)
-    require(@__MODULE__, :MAT; fun_name="read_MAT")
-
     # read data as a Dict
-    data = matread(filename)
+    data = _load_MAT(filename)
 
     # unwrap potential inner dictionary
     if !isnothing(net_key)
@@ -66,6 +64,13 @@ function read_MAT(filename::String; act_key::String,
     end
 
     return FeedforwardNetwork(layers)
+end
+
+# defined in `MATExt.jl`
+function _load_MAT(filename)
+    mod = isdefined(Base, :get_extension) ? Base.get_extension(@__MODULE__, :MATExt) : @__MODULE__
+    require(mod, :MAT; fun_name="read_MAT")
+    return nothing
 end
 
 # convert to a Vector

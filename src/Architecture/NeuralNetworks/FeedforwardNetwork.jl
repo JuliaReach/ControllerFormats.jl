@@ -56,20 +56,6 @@ end
 
 layers(N::FeedforwardNetwork) = N.layers
 
-function load_Flux_convert_network()
-    return quote
-        function Base.convert(::Type{FeedforwardNetwork}, chain::Flux.Chain)
-            layers = [convert(DenseLayerOp, layer) for layer in chain.layers]
-            return FeedforwardNetwork(layers)
-        end
-
-        function Base.convert(::Type{Flux.Chain}, net::FeedforwardNetwork)
-            layers = [convert(Flux.Dense, layer) for layer in net.layers]
-            return Flux.Chain(layers)
-        end
-    end
-end
-
 function Base.show(io::IO, N::FeedforwardNetwork)
     str = "$FeedforwardNetwork with $(dim_in(N)) inputs, " *
           "$(dim_out(N)) outputs, and $(length(N)) layers:"
