@@ -31,7 +31,7 @@ Otherwise the outer dictionary directly contains the following:
 function read_MAT(filename::String; act_key::String,
                   net_key::Union{String,Nothing}=nothing)
     # read data as a Dict
-    data = _load_MAT(filename)
+    data = _ext_read_MAT(filename)
 
     # unwrap potential inner dictionary
     if !isnothing(net_key)
@@ -67,7 +67,7 @@ function read_MAT(filename::String; act_key::String,
 end
 
 # defined in `MATExt.jl`
-function _load_MAT(filename)
+function _ext_read_MAT(filename)
     mod = isdefined(Base, :get_extension) ? Base.get_extension(@__MODULE__, :MATExt) : @__MODULE__
     require(mod, :MAT; fun_name="read_MAT")
     return nothing

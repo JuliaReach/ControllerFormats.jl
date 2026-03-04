@@ -31,11 +31,11 @@ If the argument `input_dimension` is not provided, the file is parsed an
 additional time to read the correct number (which is inefficient).
 """
 function read_ONNX(filename::String; input_dimension=nothing)
-    return _read_ONNX(filename; input_dimension)
+    return _ext_read_ONNX(filename; input_dimension)
 end
 
 # defined in `ONNXExt.jl`
-function _read_ONNX(filename; input_dimension)
+function _ext_read_ONNX(filename; input_dimension)
     mod = isdefined(Base, :get_extension) ? Base.get_extension(@__MODULE__, :ONNXExt) : @__MODULE__
     require(mod, :ONNX; fun_name="read_ONNX")
     return nothing
