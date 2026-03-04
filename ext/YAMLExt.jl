@@ -8,6 +8,6 @@ else
     import ..YAML
 end
 
-FileFormats._load_YAML(filename::String) = YAML.load_file(filename)
+FileFormats._ext_read_YAML(filename::String) = YAML.load_file(filename)
 
 end  # module

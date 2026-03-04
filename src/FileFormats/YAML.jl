@@ -14,7 +14,7 @@ A [`FeedforwardNetwork`](@ref).
 """
 function read_YAML(filename::String)
     # read data as a Dict
-    data = _load_YAML(filename)
+    data = _ext_read_YAML(filename)
 
     # read data
     !haskey(data, "weights") && throw(ArgumentError("could not find key `'weights'`"))
@@ -41,7 +41,7 @@ function read_YAML(filename::String)
 end
 
 # defined in `YAMLExt.jl`
-function _load_YAML(filename)
+function _ext_read_YAML(filename)
     mod = isdefined(Base, :get_extension) ? Base.get_extension(@__MODULE__, :YAMLExt) : @__MODULE__
     require(mod, :YAML; fun_name="read_YAML")
     return nothing

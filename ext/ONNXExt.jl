@@ -1,6 +1,7 @@
 module ONNXExt
 
 using ControllerFormats
+import ControllerFormats.FileFormats
 using ControllerFormats.FileFormats: available_activations
 
 @static if isdefined(Base, :get_extension)
@@ -9,7 +10,7 @@ else
     import ..ONNX
 end
 
-function ControllerFormats.FileFormats._read_ONNX(filename::String; input_dimension=nothing)
+function FileFormats._ext_read_ONNX(filename::String; input_dimension=nothing)
     # parse input dimension if not provided
     if isnothing(input_dimension)
         input_dimension = open(filename) do io

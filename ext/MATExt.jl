@@ -8,6 +8,6 @@ else
     import ..MAT
 end
 
-FileFormats._load_MAT(filename::String) = MAT.matread(filename)
+FileFormats._ext_read_MAT(filename::String) = MAT.matread(filename)
 
 end  # module
