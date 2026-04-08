@@ -12,7 +12,7 @@ Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
 [compat]
 Flux = "0.13 - 0.16"
 LinearAlgebra = "<0.0.1, 1.6"
-MAT = "0.10 - 0.11"
+MAT = "0.10 - 0.12"
 ONNX = "0.2 - 0.3"
 ReachabilityBase = "0.1.1 - 0.3"
 Reexport = "0.2, 1"

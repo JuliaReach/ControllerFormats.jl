@@ -29,7 +29,7 @@ Otherwise the outer dictionary directly contains the following:
   `act_key`)
 """
 function read_MAT(filename::String; act_key::String,
-                  net_key::Union{String,Nothing}=nothing)
+                  net_key::Union{String,Nothing}=nothing, trim::Bool=true)
     # read data as a Dict
     data = _ext_read_MAT(filename)
 
@@ -58,7 +58,11 @@ function read_MAT(filename::String; act_key::String,
         b = _vec(bias_vec[i])
 
         # activation function
-        act = available_activations[act_vec[i]]
+        act_name = act_vec[i]
+        if trim
+           act_name = strip(act_name)
+        end
+        act = available_activations[act_name]
 
         layers[i] = DenseLayerOp(W, b, act)
     end
