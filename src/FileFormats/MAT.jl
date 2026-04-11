@@ -60,7 +60,7 @@ function read_MAT(filename::String; act_key::String,
         # activation function
         act_name = act_vec[i]
         if trim
-           act_name = strip(act_name)
+            act_name = strip(act_name)
         end
         act = available_activations[act_name]
 
