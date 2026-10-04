@@ -2,6 +2,19 @@ using Test, ControllerFormats
 
 using ControllerFormats.Architecture: dim
 
+@testset "Warning about missing optional dependencies" begin
+    FF = ControllerFormats.FileFormats
+    if !isdefined(@__MODULE__, :MAT)
+        @test_throws AssertionError FF._ext_read_MAT(0)
+    end
+    if !isdefined(@__MODULE__, :ONNX)
+        @test_throws AssertionError FF._ext_read_ONNX(0; input_dimension=1)
+    end
+    if !isdefined(@__MODULE__, :YAML)
+        @test_throws AssertionError FF._ext_read_YAML(0)
+    end
+end
+
 import Flux, MAT, ONNX, YAML
 
 struct TestActivation <: ActivationFunction end
