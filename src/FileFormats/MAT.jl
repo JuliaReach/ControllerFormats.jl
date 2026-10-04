@@ -74,7 +74,7 @@ end
 function _ext_read_MAT(filename)
     mod = isdefined(Base, :get_extension) ? Base.get_extension(@__MODULE__, :MATExt) : @__MODULE__
     require(mod, :MAT; fun_name="read_MAT")
-    return nothing
+    return nothing  # COV_EXCL_LINE
 end
 
 # convert to a Vector
