@@ -15,6 +15,7 @@ A [`FeedforwardNetwork`](@ref).
 function read_YAML(filename::String)
     # read data as a Dict
     data = _ext_read_YAML(filename)
+    @assert !isnothing(data)
 
     # read data
     !haskey(data, "weights") && throw(ArgumentError("could not find key `'weights'`"))
