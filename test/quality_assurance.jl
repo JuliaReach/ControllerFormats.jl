@@ -22,6 +22,18 @@ import Aqua, ExplicitImports
     @test isnothing(ExplicitImports.check_no_stale_explicit_imports(ControllerFormats))
 end
 
+@static if VERSION >= v"1.10"
+    # JET v0.9.0 (earliest supported version) requires Julia v1.10
+    import Pkg
+    Pkg.add("JET")
+    import JET
+
+    @testset "JET tests" begin
+        # false positives for Base functionality
+        JET.test_package(ControllerFormats; target_modules=(ControllerFormats,))
+    end
+end
+
 @testset "Aqua tests" begin
     # Requires is only used in old versions
     @static if VERSION >= v"1.9"

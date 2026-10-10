@@ -32,6 +32,7 @@ function read_MAT(filename::String; act_key::String,
                   net_key::Union{String,Nothing}=nothing, trim::Bool=true)
     # read data as a Dict
     data = _ext_read_MAT(filename)
+    @assert !isnothing(data)
 
     # unwrap potential inner dictionary
     if !isnothing(net_key)
