@@ -33,7 +33,8 @@ function _first_inconsistent_layer(L)
     prev = nothing
     for (i, l) in enumerate(L)
         if !isnothing(prev) &&
-           ((!isnothing(dim_in(l)) && !isnothing(dim_out(prev)) && dim_in(l) != dim_out(prev)) ||
+           ((hasmethod(dim_in, (typeof(l),)) && hasmethod(dim_in, (typeof(prev),)) &&
+             dim_in(l) != dim_out(prev)) ||
             !_iscompatible(size(prev), size(l)))
             return i
         end

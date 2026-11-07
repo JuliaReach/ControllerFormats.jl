@@ -1,5 +1,8 @@
 # AbstractLayerOp implementation
 struct TestLayerOp <: AbstractLayerOp end
+
+ControllerFormats.dim_in(::TestLayerOp) = 1
+ControllerFormats.dim_out(::TestLayerOp) = 2
+
 L = TestLayerOp()
-dim_in(L)
-dim_out(L)
+@test dim(L) == (1, 2)
