@@ -10,7 +10,7 @@ An `AbstractLayerOp` represents a layer *operation*. A classical example is a
 """
 abstract type AbstractLayerOp end
 
-"""
+@doc """
     dim_in(L::AbstractLayerOp)
 
 Return the input dimension of a layer operation.
@@ -23,9 +23,10 @@ Return the input dimension of a layer operation.
 
 The input dimension of `L`.
 """
-function dim_in(::AbstractLayerOp) end  # COV_EXCL_LINE
+dim_in(::AbstractLayerOp)
+function dim_in end
 
-"""
+@doc """
     dim_out(L::AbstractLayerOp)
 
 Return the output dimension of a layer operation.
@@ -38,7 +39,8 @@ Return the output dimension of a layer operation.
 
 The output dimension of `L`.
 """
-function dim_out(::AbstractLayerOp) end  # COV_EXCL_LINE
+dim_out(::AbstractLayerOp)
+function dim_out end
 
 """
     dim(L::AbstractLayerOp)

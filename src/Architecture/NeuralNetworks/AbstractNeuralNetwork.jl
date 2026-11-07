@@ -18,7 +18,7 @@ The following standard methods are implemented:
 """
 abstract type AbstractNeuralNetwork end
 
-"""
+@doc """
     layers(N::AbstractNeuralNetwork)
 
 Return a list of the layers of a neural network.
@@ -31,7 +31,8 @@ Return a list of the layers of a neural network.
 
 The list of layers.
 """
-function layers(::AbstractNeuralNetwork) end  # COV_EXCL_LINE
+layers(::AbstractNeuralNetwork)
+function layers end
 
 """
     dim_in(N::AbstractNeuralNetwork)
