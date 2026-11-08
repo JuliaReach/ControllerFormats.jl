@@ -1,4 +1,4 @@
-module MATExt
+module ControllerFormatsMATExt
 
 import ControllerFormats.FileFormats
 

@@ -71,9 +71,9 @@ function read_MAT(filename::String; act_key::String,
     return FeedforwardNetwork(layers)
 end
 
-# defined in `MATExt.jl`
+# defined in `ControllerFormatsMATExt.jl`
 function _ext_read_MAT(filename)
-    mod = isdefined(Base, :get_extension) ? Base.get_extension(@__MODULE__, :MATExt) : @__MODULE__
+    mod = isdefined(Base, :get_extension) ? Base.get_extension(@__MODULE__, :ControllerFormatsMATExt) : @__MODULE__
     require(mod, :MAT; fun_name="read_MAT")
     return nothing  # COV_EXCL_LINE
 end

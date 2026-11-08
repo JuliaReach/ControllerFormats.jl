@@ -1,4 +1,4 @@
-module ONNXExt
+module ControllerFormatsONNXExt
 
 using ControllerFormats
 import ControllerFormats.FileFormats

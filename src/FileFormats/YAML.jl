@@ -41,9 +41,9 @@ function read_YAML(filename::String)
     return FeedforwardNetwork(layers)
 end
 
-# defined in `YAMLExt.jl`
+# defined in `ControllerFormatsYAMLExt.jl`
 function _ext_read_YAML(filename)
-    mod = isdefined(Base, :get_extension) ? Base.get_extension(@__MODULE__, :YAMLExt) : @__MODULE__
+    mod = isdefined(Base, :get_extension) ? Base.get_extension(@__MODULE__, :ControllerFormatsYAMLExt) : @__MODULE__
     require(mod, :YAML; fun_name="read_YAML")
     return nothing  # COV_EXCL_LINE
 end
