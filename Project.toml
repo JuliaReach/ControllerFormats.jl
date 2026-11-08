@@ -22,10 +22,10 @@ YAML = "0.3 - 0.4"
 julia = "1.6"
 
 [extensions]
-FluxExt = "Flux"
-MATExt = "MAT"
-ONNXExt = "ONNX"
-YAMLExt = "YAML"
+ControllerFormatsFluxExt = "Flux"
+ControllerFormatsMATExt = "MAT"
+ControllerFormatsONNXExt = "ONNX"
+ControllerFormatsYAMLExt = "YAML"
 
 [extras]
 Flux = "587475ba-b771-5e3f-ad9e-33799f191a9c"

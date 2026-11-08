@@ -1,4 +1,4 @@
-module FluxExt
+module ControllerFormatsFluxExt
 
 using ControllerFormats.Architecture
 using ControllerFormats.Architecture: _id, _relu, _sigmoid

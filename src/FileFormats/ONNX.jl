@@ -34,9 +34,9 @@ function read_ONNX(filename::String; input_dimension=nothing)
     return _ext_read_ONNX(filename; input_dimension)
 end
 
-# defined in `ONNXExt.jl`
+# defined in `ControllerFormatsONNXExt.jl`
 function _ext_read_ONNX(filename; input_dimension)
-    mod = isdefined(Base, :get_extension) ? Base.get_extension(@__MODULE__, :ONNXExt) : @__MODULE__
+    mod = isdefined(Base, :get_extension) ? Base.get_extension(@__MODULE__, :ControllerFormatsONNXExt) : @__MODULE__
     require(mod, :ONNX; fun_name="read_ONNX")
     return nothing  # COV_EXCL_LINE
 end

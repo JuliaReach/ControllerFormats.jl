@@ -1,4 +1,4 @@
-module YAMLExt
+module ControllerFormatsYAMLExt
 
 import ControllerFormats.FileFormats
 
