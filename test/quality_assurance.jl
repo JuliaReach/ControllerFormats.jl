@@ -9,7 +9,7 @@ import Aqua, ExplicitImports
                                                                           ignore=ignores))
     @test isnothing(ExplicitImports.check_all_explicit_imports_via_owners(ControllerFormats))
     ignores = (:ONNXCtx, :OneOf, :ProtoDecoder, :Umlaut, :decode, :load, :load_file,
-               :onnx_gemm,
+               :onnx_gemm, :relu, :sub, :tanh,
                # false positive due to package extensions:
                :_ext_read_MAT, :_ext_read_ONNX, :_ext_read_YAML, :_id)
     @test isnothing(ExplicitImports.check_all_qualified_accesses_are_public(ControllerFormats;
