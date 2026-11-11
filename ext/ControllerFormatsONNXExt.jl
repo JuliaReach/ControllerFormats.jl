@@ -13,15 +13,7 @@ end
 function FileFormats._ext_read_ONNX(filename::String; input_dimension=nothing)
     # parse input dimension if not provided
     if isnothing(input_dimension)
-        input_dimension = open(filename) do io
-            onnx_raw_model = ONNX.decode(ONNX.ProtoDecoder(io), ONNX.ModelProto)
-            input = onnx_raw_model.graph.input
-            @assert input isa Vector{ONNX.ValueInfoProto} && length(input) == 1
-            dimensions = input[1].var"#type".value.value.shape.dim
-            @assert dimensions isa Vector{ONNX.var"TensorShapeProto.Dimension"} &&
-                    length(dimensions) == 2 && dimensions[1].value.value == 1
-            return dimensions[2].value.value
-        end
+        input_dimension = get_input_dimension(filename)
     end
 
     # ONNX.jl expects an input, so the user must provide that
@@ -35,14 +27,44 @@ function FileFormats._ext_read_ONNX(filename::String; input_dimension=nothing)
 
     layer_parameters = []
     ops = data.ops
-    @assert ops[1] isa ONNX.Umlaut.Input && iszero(ops[1].val)  # skip input operation
-    idx = 2
+    @assert iszero(ops[1].val)
+    if ops[1] isa Union{ONNX.Umlaut.Input,ONNX.Umlaut.Constant}
+        idx = 2  # skip empty input/constant operation
+    else
+        @assert false "unsupported first op $(typeof(ops[1]))"
+    end
     @inbounds while idx <= length(ops)
         op = ops[idx]
-        if !(op.val isa AbstractMatrix)
+        # expect weights matrix
+        if op.val isa AbstractMatrix
+            W_flattened = op.val
+        elseif op.val isa AbstractArray
+            s = size(op.val)
+            if length(s) == 1
+                break
+            end
+            i = -1
+            o = -1
+            for j in eachindex(s)
+                if s[j] == 1
+                    continue
+                elseif i == -1
+                    i = j
+                elseif o == -1
+                    o = j
+                else
+                    @assert false "unexpected dimension: $s"
+                end
+            end
+            @assert o != -1 "unexpected dimension: $s"
+            @show s
+            @show s[i]
+            @show s[o]
+            W_flattened = reshape(op.val, (s[i], s[o]))
+        else
             break
         end
-        W = permutedims(op.val)
+        W = permutedims(W_flattened)
         idx += 1
         op = ops[idx]
         @assert op.val isa AbstractVector "expected a bias vector"
@@ -50,7 +72,8 @@ function FileFormats._ext_read_ONNX(filename::String; input_dimension=nothing)
         push!(layer_parameters, (W, b))
         idx += 1
     end
-    n_layers = div(idx - 2, 2)
+    @show n_layers = div(idx - 2, 2)
+    @show length(ops)
     # 4 operations per layer +1 for the input operation
     # (-1 potentially for implicit identity activation in the last layer)
     @assert length(ops) == 4 * n_layers ||
@@ -99,6 +122,25 @@ function FileFormats._ext_read_ONNX(filename::String; input_dimension=nothing)
     end
 
     return FeedforwardNetwork(layers)
+end
+
+function get_input_dimension(filename::String)
+    input_dimension = open(filename) do io
+        onnx_raw_model = ONNX.decode(ONNX.ProtoDecoder(io), ONNX.ModelProto)
+        input = onnx_raw_model.graph.input
+        @assert input isa Vector{ONNX.ValueInfoProto} && !isempty(input)
+        dimensions = input[1].var"#type".value.value.shape.dim
+        @assert dimensions isa Vector{ONNX.var"TensorShapeProto.Dimension"}
+        # `dimensions` consists of 1's except for the last entry
+        for (i, di) in enumerate(dimensions)
+            vi = di.value.value
+            if vi != 1
+                @assert i == length(dimensions)
+            end
+        end
+        input_dimension = dimensions[end].value.value
+    end
+    return input_dimension
 end
 
 end  # module
