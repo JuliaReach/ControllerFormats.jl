@@ -15,7 +15,7 @@ const supported_activations = Set([identity, ONNX.relu, ONNX.tanh])
 function FileFormats._ext_read_ONNX(filename::String; input_dimension=nothing)
     # parse input dimension if not provided
     if isnothing(input_dimension)
-        input_dimension = get_input_dimension(filename)
+        @show input_dimension = get_input_dimension(filename)
     end
 
     # ONNX.jl expects an input vector
@@ -23,6 +23,7 @@ function FileFormats._ext_read_ONNX(filename::String; input_dimension=nothing)
 
     # read data
     data = ONNX.load(filename, x0)
+    @show data.ops
 
     @assert data isa ONNX.Umlaut.Tape{ONNX.ONNXCtx} "`read_ONNX` must be called with " *
                                                     "`ONNX.Umlaut.Tape{ONNX.ONNXCtx}`"
@@ -33,7 +34,10 @@ function FileFormats._ext_read_ONNX(filename::String; input_dimension=nothing)
     layer = 1
     ops_converted = Vector{Any}(undef, length(data.ops))
     @inbounds for (i, op) in enumerate(data.ops)
+        @show op.id
+        @show op.typ
         if op isa ONNX.Umlaut.Constant
+            @show "CONSTANT"
             if op.typ == Vector{Float32}
                 # bias vector
                 ops_converted[i] = op.val
@@ -43,6 +47,8 @@ function FileFormats._ext_read_ONNX(filename::String; input_dimension=nothing)
                 ops_converted[i] = _read_weights_matrix(op)
             end
         elseif op isa ONNX.Umlaut.Call
+            @show "CALL"
+            @show op
             # affine map or activation function
             args = op.args
             if length(args) == 5 && args[2] == ONNX.onnx_gemm
@@ -85,16 +91,20 @@ function FileFormats._ext_read_ONNX(filename::String; input_dimension=nothing)
                 push!(layers, L)
                 layer += 1
             elseif op.fn == ONNX.sub  # COV_EXCL_LINE
-                throw(ArgumentError("unsupported operation sub: $op"))  # COV_EXCL_LINE
+                # throw(ArgumentError("unsupported operation sub: $op"))  # COV_EXCL_LINE
             else
-                throw(ArgumentError("unsupported operation: $op"))  # COV_EXCL_LINE
+                # throw(ArgumentError("unsupported operation: $op"))  # COV_EXCL_LINE
             end
         elseif op isa ONNX.Umlaut.Input
             # ignore input
+            @show "INPUT"
+            @show op
             @assert iszero(op.val) && length(op.val) == input_dimension && !found_input
             found_input = true
             ops_converted[i] = x0
         else
+            @show "OTHER"
+            @show op
             throw(ArgumentError("unsupported operation: $op"))  # COV_EXCL_LINE
         end
     end
