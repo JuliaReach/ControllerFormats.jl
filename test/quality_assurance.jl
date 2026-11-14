@@ -8,13 +8,13 @@ import Aqua, ExplicitImports
     @test isnothing(ExplicitImports.check_all_explicit_imports_are_public(ControllerFormats;
                                                                           ignore=ignores))
     @test isnothing(ExplicitImports.check_all_explicit_imports_via_owners(ControllerFormats))
-    ignores = (:ONNXCtx, :ProtoDecoder, :Umlaut, :decode, :load, :load_file,
+    ignores = (:ONNXCtx, :OneOf, :ProtoDecoder, :Umlaut, :decode, :load, :load_file,
                :onnx_gemm,
                # false positive due to package extensions:
                :_ext_read_MAT, :_ext_read_ONNX, :_ext_read_YAML, :_id)
     @test isnothing(ExplicitImports.check_all_qualified_accesses_are_public(ControllerFormats;
                                                                             ignore=ignores))
-    ignores = (:ProtoDecoder, :Umlaut, :decode)
+    ignores = (:OneOf, :ProtoDecoder, :Umlaut, :decode)
     @test isnothing(ExplicitImports.check_all_qualified_accesses_via_owners(ControllerFormats;
                                                                             ignore=ignores))
     @test isnothing(ExplicitImports.check_no_implicit_imports(ControllerFormats))

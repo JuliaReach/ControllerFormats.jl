@@ -13,18 +13,10 @@ end
 function FileFormats._ext_read_ONNX(filename::String; input_dimension=nothing)
     # parse input dimension if not provided
     if isnothing(input_dimension)
-        input_dimension = open(filename) do io
-            onnx_raw_model = ONNX.decode(ONNX.ProtoDecoder(io), ONNX.ModelProto)
-            input = onnx_raw_model.graph.input
-            @assert input isa Vector{ONNX.ValueInfoProto} && length(input) == 1
-            dimensions = input[1].var"#type".value.value.shape.dim
-            @assert dimensions isa Vector{ONNX.var"TensorShapeProto.Dimension"} &&
-                    length(dimensions) == 2 && dimensions[1].value.value == 1
-            return dimensions[2].value.value
-        end
+        input_dimension = get_input_dimension(filename)
     end
 
-    # ONNX.jl expects an input, so the user must provide that
+    # ONNX.jl expects an input vector
     x0 = zeros(Float32, input_dimension)
 
     # read data
@@ -99,6 +91,30 @@ function FileFormats._ext_read_ONNX(filename::String; input_dimension=nothing)
     end
 
     return FeedforwardNetwork(layers)
+end
+
+function get_input_dimension(filename::String)
+    input_dimension = open(filename) do io
+        onnx_raw_model = ONNX.decode(ONNX.ProtoDecoder(io), ONNX.ModelProto)
+        input = onnx_raw_model.graph.input
+        @assert input isa Vector{ONNX.ValueInfoProto} && !isempty(input)
+        dimensions = input[1].var"#type".value.value.shape.dim
+        @assert dimensions isa Vector{ONNX.var"TensorShapeProto.Dimension"}
+        found_dim_value = false
+        for di in dimensions
+            vi = di.value
+            if !(vi isa ONNX.OneOf{Int64}) || vi.name != :dim_value
+                continue
+            end
+            found_dim_value = true
+            if vi.value != 1  # skip values 1
+                return vi.value
+            end
+        end
+        @assert found_dim_value
+        return 1
+    end
+    return input_dimension
 end
 
 end  # module
