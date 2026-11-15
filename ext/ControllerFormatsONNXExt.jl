@@ -84,11 +84,10 @@ function FileFormats._ext_read_ONNX(filename::String; input_dimension=nothing)
                 ops_converted[i] = L
                 push!(layers, L)
                 layer += 1
-            elseif op.fn == ONNX.sub
-                throw(ArgumentError("unsupported operation sub: $op"))
+            elseif op.fn == ONNX.sub  # COV_EXCL_LINE
+                throw(ArgumentError("unsupported operation sub: $op"))  # COV_EXCL_LINE
             else
-                return op
-                throw(ArgumentError("unsupported operation: $op"))
+                throw(ArgumentError("unsupported operation: $op"))  # COV_EXCL_LINE
             end
         elseif op isa ONNX.Umlaut.Input
             # ignore input
@@ -96,7 +95,7 @@ function FileFormats._ext_read_ONNX(filename::String; input_dimension=nothing)
             found_input = true
             ops_converted[i] = x0
         else
-            throw(ArgumentError("unsupported operation: $op"))
+            throw(ArgumentError("unsupported operation: $op"))  # COV_EXCL_LINE
         end
     end
 
@@ -153,7 +152,7 @@ function _read_weights_matrix(op)
             elseif o == -1
                 o = j
             else
-                @assert false "unexpected dimension: $s"
+                @assert false "unexpected dimension: $s"  # COV_EXCL_LINE
             end
         end
         # default indices: first and last
@@ -165,7 +164,7 @@ function _read_weights_matrix(op)
         end
         W = reshape(op.val, (s[i], s[o]))
     else
-        @assert false "unsupported operation: $op"
+        @assert false "unsupported operation: $op"  # COV_EXCL_LINE
     end
     return permutedims(W)
 end
