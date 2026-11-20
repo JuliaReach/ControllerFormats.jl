@@ -44,3 +44,9 @@ end
 
     Aqua.test_all(ControllerFormats; stale_deps=stale_deps)
 end
+
+@testset "No boxed closure captures" begin
+    if isdefined(Test, :detect_closure_boxes)  # Julia >= v"1.14"
+        @test isempty(Test.detect_closure_boxes(ControllerFormats))
+    end
+end
